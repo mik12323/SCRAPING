@@ -1,0 +1,19 @@
+# Ignore the memory file
+latest_speech_date.txt
+latest_fomc_date.txt
+csale.txt
+
+# Ignore Python cache folders
+__pycache__/
+.cache/
+
+# Ignore environment files (where we will hide your keys)
+.env
+
+# My private scripts
+exercise.py
+test.py
+
+# Folders
+Playwright/
+BeautifulSoup/
