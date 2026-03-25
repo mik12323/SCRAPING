@@ -1,28 +1,26 @@
 import requests
 
 class DiscordNotifier:
-    def __init__(self, webhook_url):
-        self.url = webhook_url
-
-    def post(self, title, description, url):
-        # 3447003 is a 'Decimal' code for blue. 
-        # You can find these codes online (Discord Color Picker).
-        
+    @staticmethod # Use staticmethod so you don't need 'self'
+    def post(webhook_url, title, description, post_link, image_url=None):
         if len(description) > 3900:
             description = description[:3900] + "..."
+
+        embed = {
+            "title": title,
+            "description": description,
+            "url": post_link,
+            "footer": {"text": "Sent by Sauce's Fed Monitor Bot"},
+            "color": 0x00ff00 # Green color
+        }
+
+        # If there is an image, add it to the embed
+        if image_url:
+            embed["image"] = {"url": image_url}
+
         payload = {
-            "content": "@everyone",  # This line triggers the ping!
-            "embeds": [
-                {
-                    "title": title,
-                    "description": description,
-                    "url": url,
-                    # You can even add a footer at the bottom
-                    "footer": {
-                        "text": "Sent by Sauce's Fed Monitor Bot"
-                    }
-                }
-            ]
+            "content": "@everyone",
+            "embeds": [embed]
         }
         
-        requests.post(self.url, json=payload)
+        requests.post(webhook_url, json=payload)

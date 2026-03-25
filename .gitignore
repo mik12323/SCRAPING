@@ -2,6 +2,7 @@
 latest_speech_date.txt
 latest_fomc_date.txt
 csale.txt
+last_id.txt
 
 # Ignore Python cache folders
 __pycache__/

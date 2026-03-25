@@ -52,7 +52,7 @@ while True:
             # 4. UPDATE the notepad so we don't notify again for this post
             save_new_date(latest_date)
             print("Now asking Gemini for analysis")
-            prompt = "I JUST WANT TO KNOW THEY KEY POINTS AND TELL ME IF ITS BULLISH in 4 sectors GOLD, Dollar, Crypto, Economy AND BEARISH AND TELL WHY USE SIMPLE ENGLISH DONT MAKE IT TOO LONG RITICAL: Keep your answer under 1500 characters so it fits in a message."
+            prompt = "I JUST WANT TO KNOW THEY KEY POINTS AND TELL ME IF ITS BULLISH base on the speech even if it is not mentioned in 4 sectors GOLD, Dollar, Crypto, Economy AND BEARISH AND TELL WHY USE SIMPLE ENGLISH DONT MAKE IT TOO LONG RITICAL: Keep your answer under 1500 characters so it fits in a message."
             answer = Base_Ai.bullish_or_bearish(latest_link, prompt)
             # print(f"AI Analysis: {answer}")
             send_embed.post(latest_post.title, answer, latest_link)

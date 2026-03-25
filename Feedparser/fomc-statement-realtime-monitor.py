@@ -19,7 +19,7 @@ my_webhook = os.getenv("FOMC_SPEECH_HOOK")
 CHECKPOINT_FILE = "latest_fomc_date.txt"
 RSS_URL = "https://www.federalreserve.gov/feeds/press_all.xml"
 webhook_url = my_webhook
-send_embed = DiscordNotifier(webhook_url)
+
 
 def get_last_saved_date():
     # If the file exists, read the date. If not, return None.
@@ -58,7 +58,7 @@ while True:
             prompt = "I JUST WANT TO KNOW THEY KEY POINTS AND TELL ME IF ITS BULLISH in 4 sectors GOLD, Dollar, Crypto, Economy AND BEARISH AND TELL WHY USE SIMPLE ENGLISH DONT MAKE IT TOO LONG RITICAL: Keep your answer under 1500 characters so it fits in a message."
             answer = Base_Ai.bullish_or_bearish(latest_link, prompt)
             # print(f"AI Analysis: {answer}")
-            send_embed.post(latest_post.title, answer, latest_link)
+            DiscordNotifier.post(webhook_url,latest_post.title, answer, latest_link)
         else:
             print("No new posts. Checking again in 60 seconds...", end="\r")
         
