@@ -3,6 +3,7 @@ latest_speech_date.txt
 latest_fomc_date.txt
 csale.txt
 last_id.txt
+last_id_*.txt
 
 # Ignore Python cache folders
 __pycache__/
@@ -10,6 +11,10 @@ __pycache__/
 
 # Ignore environment files (where we will hide your keys)
 .env
+
+# Ignore trading history
+trading_history.json
+trading_context.json
 
 # My private scripts
 exercise.py
