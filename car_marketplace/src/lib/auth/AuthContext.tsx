@@ -87,6 +87,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signUp = async (username: string, password: string, phone: string) => {
+    // Check if username already exists
+    const { data: existingUser } = await supabase
+      .from('users')
+      .select('name')
+      .eq('name', username)
+      .maybeSingle();
+
+    if (existingUser) {
+      return { error: { message: 'Username already taken. Please choose a different one.' } };
+    }
+
     // Create auth user with a synthetic email
     const email = `${username}@usedcars.ph`;
     const { data, error } = await supabase.auth.signUp({ email, password });
