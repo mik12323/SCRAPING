@@ -157,7 +157,7 @@ export default function BrowseContent() {
               <p className="text-red-600 mb-4">{error.message || 'Failed to load cars'}</p>
               <button
                 onClick={() => mutate()}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 cursor-pointer"
               >
                 Retry
               </button>

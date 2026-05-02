@@ -7,6 +7,7 @@ import { supabase } from '@/lib/db/supabase-client';
 import { formatDisplayPrice } from '@/lib/api';
 import type { Car } from '@/lib/types';
 import ConfirmationModal from '@/components/ConfirmationModal';
+import { createAdminNotification, createNotification } from '@/lib/db/queries/notifications';
 
 export const dynamic = 'force-dynamic'; // Prevent static generation - location is browser-only
 
@@ -161,16 +162,14 @@ export default function AdminPage() {
         .eq('id', id);
 
       if (!error && car.user_id) {
-        // Create notification for user
-        await supabase
-          .from('notifications')
-          .insert({
-            user_id: car.user_id,
-            listing_id: id,
-            type: 'edit_approved',
-            title: 'Edit Approved',
-            message: `Your edit to ${car.year} ${car.brand} ${car.model} has been approved.`,
-          });
+        // Create notification for user (skip if user is admin - handled in createNotification)
+        await createNotification(
+          car.user_id,
+          id,
+          'edit_approved',
+          'Edit Approved',
+          `Your edit to ${car.year} ${car.brand} ${car.model} has been approved.`
+        );
       }
 
       if (!error) {
@@ -185,7 +184,7 @@ export default function AdminPage() {
       return;
     }
 
-    // Regular status change (new listings)
+    // Regular status change (new listings) - notify ADMINS about approval/rejection
     const { error } = await supabase
       .from('listings')
       .update({ status: newStatus, updated_at: new Date().toISOString(), edit_proposal: null })
@@ -200,23 +199,20 @@ export default function AdminPage() {
         [newStatus]: prev[newStatus] + 1,
       }));
 
-      // Notify user about new listing approval/rejection
-      if (car?.user_id) {
+      // Notify ADMINS about new listing approval/rejection
+      if (car) {
         const type = newStatus === 'approved' ? 'listing_approved' : 'listing_rejected';
-        const title = newStatus === 'approved' ? 'Listing Approved' : 'Listing Rejected';
+        const title = newStatus === 'approved' ? 'New Listing Approved' : 'New Listing Rejected';
         const message = newStatus === 'approved'
-          ? `Your listing ${car.year} ${car.brand} ${car.model} has been approved and is now live.`
-          : `Your listing ${car.year} ${car.brand} ${car.model} was rejected.`;
+          ? `A new listing ${car.year} ${car.brand} ${car.model} has been approved.`
+          : `A new listing ${car.year} ${car.brand} ${car.model} was rejected.`;
 
-        await supabase
-          .from('notifications')
-          .insert({
-            user_id: car.user_id,
-            listing_id: id,
-            type,
-            title,
-            message,
-          });
+        await createAdminNotification(
+          id,
+          type,
+          title,
+          message
+        );
       }
     }
   };
@@ -252,20 +248,18 @@ export default function AdminPage() {
       .eq('id', rejectEditModal.listingId);
 
     if (!error && car.user_id) {
-      // Create notification for user
+      // Create notification for user (skip if user is admin - handled in createNotification)
       const message = adminRemarks.trim()
         ? `Reason: ${adminRemarks.trim()}`
         : `Your edit to ${car.year} ${car.brand} ${car.model} was rejected and reverted to original.`;
 
-      await supabase
-        .from('notifications')
-        .insert({
-          user_id: car.user_id,
-          listing_id: rejectEditModal.listingId,
-          type: 'edit_rejected',
-          title: 'Edit Rejected',
-          message,
-        });
+      await createNotification(
+        car.user_id,
+        rejectEditModal.listingId,
+        'edit_rejected',
+        'Edit Rejected',
+        message
+      );
     }
 
     if (!error) {

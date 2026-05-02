@@ -1,0 +1,1338 @@
+﻿
+> car_marketplace@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.2.4 (Turbopack)
+
+  Creating an optimized production build ...
+node.exe : 
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+> Build error occurred
+Error: Turbopack build failed with 42 errors:
+./src/lib/db/queries/cars.ts:44:11
+'const' declarations must be initialized
+  [90m42 |[0m
+  [90m43 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m44 |[0m     [36mconst[0m { getCars: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m   |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+  [90m45 |[0m     [36mreturn[0m mockGet(filters, page, perPage);
+  [90m46 |[0m   }
+  [90m47 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:119:13
+'const' declarations must be initialized
+  [90m117 |[0m     [36mif[0m (error) {
+  [90m118 |[0m       console.error([32m'Supabase error in getCars:'[0m, error);
+[31m[1m>[0m [90m119 |[0m       [36mconst[0m { getCars: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m             [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+  [90m120 |[0m       [36mreturn[0m mockGet(filters, page, perPage);
+  [90m121 |[0m     }
+  [90m122 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:133:11
+'const' declarations must be initialized
+  [90m131 |[0m   } [36mcatch[0m (err) {
+  [90m132 |[0m     console.error([32m'Error in getCars:'[0m, err);
+[31m[1m>[0m [90m133 |[0m     [36mconst[0m { getCars: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^[0m
+  [90m134 |[0m     [36mreturn[0m mockGet(filters, page, perPage);
+  [90m135 |[0m   }
+  [90m136 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:142:11
+'const' declarations must be initialized
+  [90m140 |[0m
+  [90m141 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m142 |[0m     [36mconst[0m { getCarBySlug: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m143 |[0m     [36mreturn[0m mockGet(slug);
+  [90m144 |[0m   }
+  [90m145 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:156:13
+'const' declarations must be initialized
+  [90m154 |[0m     [36mif[0m (error || !data) {
+  [90m155 |[0m       console.error([32m'Supabase error in getCarBySlug:'[0m, error);
+[31m[1m>[0m [90m156 |[0m       [36mconst[0m { getCarBySlug: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m             [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m157 |[0m       [36mreturn[0m mockGet(slug);
+  [90m158 |[0m     }
+  [90m159 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:163:11
+'const' declarations must be initialized
+  [90m161 |[0m   } [36mcatch[0m (err) {
+  [90m162 |[0m     console.error([32m'Error in getCarBySlug:'[0m, err);
+[31m[1m>[0m [90m163 |[0m     [36mconst[0m { getCarBySlug: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m164 |[0m     [36mreturn[0m mockGet(slug);
+  [90m165 |[0m   }
+  [90m166 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:172:11
+'const' declarations must be initialized
+  [90m170 |[0m
+  [90m171 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m172 |[0m     [36mconst[0m { getFeaturedCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m173 |[0m     [36mreturn[0m mockGet();
+  [90m174 |[0m   }
+  [90m175 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:186:13
+'const' declarations must be initialized
+  [90m184 |[0m     [36mif[0m (error) {
+  [90m185 |[0m       console.error([32m'Supabase error in getFeaturedCars:'[0m, error);
+[31m[1m>[0m [90m186 |[0m       [36mconst[0m { getFeaturedCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m             [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m187 |[0m       [36mreturn[0m mockGet();
+  [90m188 |[0m     }
+  [90m189 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:193:11
+'const' declarations must be initialized
+  [90m191 |[0m   } [36mcatch[0m (err) {
+  [90m192 |[0m     console.error([32m'Error in getFeaturedCars:'[0m, err);
+[31m[1m>[0m [90m193 |[0m     [36mconst[0m { getFeaturedCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m194 |[0m     [36mreturn[0m mockGet();
+  [90m195 |[0m   }
+  [90m196 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:202:11
+'const' declarations must be initialized
+  [90m200 |[0m
+  [90m201 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m202 |[0m     [36mconst[0m { getTrendingCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m203 |[0m     [36mreturn[0m mockGet(limit);
+  [90m204 |[0m   }
+  [90m205 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:216:13
+'const' declarations must be initialized
+  [90m214 |[0m     [36mif[0m (error) {
+  [90m215 |[0m       console.error([32m'Supabase error in getTrendingCars:'[0m, error);
+[31m[1m>[0m [90m216 |[0m       [36mconst[0m { getTrendingCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m             [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m217 |[0m       [36mreturn[0m mockGet(limit);
+  [90m218 |[0m     }
+  [90m219 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:231:11
+'const' declarations must be initialized
+  [90m229 |[0m   } [36mcatch[0m (err) {
+  [90m230 |[0m     console.error([32m'Error in getTrendingCars:'[0m, err);
+[31m[1m>[0m [90m231 |[0m     [36mconst[0m { getTrendingCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m232 |[0m     [36mreturn[0m mockGet(limit);
+  [90m233 |[0m   }
+  [90m234 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:240:11
+'const' declarations must be initialized
+  [90m238 |[0m
+  [90m239 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m240 |[0m     [36mconst[0m { getBrands: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m241 |[0m     [36mreturn[0m mockGet();
+  [90m242 |[0m   }
+  [90m243 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:252:13
+'const' declarations must be initialized
+  [90m250 |[0m     [36mif[0m (error) {
+  [90m251 |[0m       console.error([32m'Supabase error in getBrands:'[0m, error);
+[31m[1m>[0m [90m252 |[0m       [36mconst[0m { getBrands: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m             [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m253 |[0m       [36mreturn[0m mockGet();
+  [90m254 |[0m     }
+  [90m255 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:260:11
+'const' declarations must be initialized
+  [90m258 |[0m   } [36mcatch[0m (err) {
+  [90m259 |[0m     console.error([32m'Error in getBrands:'[0m, err);
+[31m[1m>[0m [90m260 |[0m     [36mconst[0m { getBrands: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m261 |[0m     [36mreturn[0m mockGet();
+  [90m262 |[0m   }
+  [90m263 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:269:11
+'const' declarations must be initialized
+  [90m267 |[0m
+  [90m268 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m269 |[0m     [36mconst[0m { getModelsByBrand: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m270 |[0m     [36mreturn[0m mockGet(brand);
+  [90m271 |[0m   }
+  [90m272 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:282:13
+'const' declarations must be initialized
+  [90m280 |[0m     [36mif[0m (error) {
+  [90m281 |[0m       console.error([32m'Supabase error in getModelsByBrand:'[0m, error);
+[31m[1m>[0m [90m282 |[0m       [36mconst[0m { getModelsByBrand: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m             [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m283 |[0m       [36mreturn[0m mockGet(brand);
+  [90m284 |[0m     }
+  [90m285 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:290:11
+'const' declarations must be initialized
+  [90m288 |[0m   } [36mcatch[0m (err) {
+  [90m289 |[0m     console.error([32m'Error in getModelsByBrand:'[0m, err);
+[31m[1m>[0m [90m290 |[0m     [36mconst[0m { getModelsByBrand: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m291 |[0m     [36mreturn[0m mockGet(brand);
+  [90m292 |[0m   }
+  [90m293 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:299:11
+'const' declarations must be initialized
+  [90m297 |[0m
+  [90m298 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m299 |[0m     [36mconst[0m { getRelatedCars: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m300 |[0m     [36mreturn[0m mockGet(carId, limit);
+  [90m301 |[0m   }
+  [90m302 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:324:13
+'const' declarations must be initialized
+  [90m322 |[0m     [36mif[0m (error) {
+  [90m323 |[0m       console.error([32m'Supabase error in getRelatedCars:'[0m, error);
+[31m[1m>[0m [90m324 |[0m       [36mconst[0m { getRelatedCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m             [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m325 |[0m       [36mreturn[0m mockGet(carId, limit);
+  [90m326 |[0m     }
+  [90m327 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:331:11
+'const' declarations must be initialized
+  [90m329 |[0m   } [36mcatch[0m (err) {
+  [90m330 |[0m     console.error([32m'Error in getRelatedCars:'[0m, err);
+[31m[1m>[0m [90m331 |[0m     [36mconst[0m { getRelatedCars: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m           [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m332 |[0m     [36mreturn[0m mockGet(carId, limit);
+  [90m333 |[0m   }
+  [90m334 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:44:32
+Expected a semicolon
+  [90m42 |[0m
+  [90m43 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m44 |[0m     [36mconst[0m { getCars: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m   |[0m                                [31m[1m^^^^[0m
+  [90m45 |[0m     [36mreturn[0m mockGet(filters, page, perPage);
+  [90m46 |[0m   }
+  [90m47 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:119:34
+Expected a semicolon
+  [90m117 |[0m     [36mif[0m (error) {
+  [90m118 |[0m       console.error([32m'Supabase error in getCars:'[0m, error);
+[31m[1m>[0m [90m119 |[0m       [36mconst[0m { getCars: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                  [31m[1m^^^^[0m
+  [90m120 |[0m       [36mreturn[0m mockGet(filters, page, perPage);
+  [90m121 |[0m     }
+  [90m122 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:133:32
+Expected a semicolon
+  [90m131 |[0m   } [36mcatch[0m (err) {
+  [90m132 |[0m     console.error([32m'Error in getCars:'[0m, err);
+[31m[1m>[0m [90m133 |[0m     [36mconst[0m { getCars: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                [31m[1m^^^^[0m
+  [90m134 |[0m     [36mreturn[0m mockGet(filters, page, perPage);
+  [90m135 |[0m   }
+  [90m136 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:142:37
+Expected a semicolon
+  [90m140 |[0m
+  [90m141 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m142 |[0m     [36mconst[0m { getCarBySlug: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                     [31m[1m^^^^[0m
+  [90m143 |[0m     [36mreturn[0m mockGet(slug);
+  [90m144 |[0m   }
+  [90m145 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:156:39
+Expected a semicolon
+  [90m154 |[0m     [36mif[0m (error || !data) {
+  [90m155 |[0m       console.error([32m'Supabase error in getCarBySlug:'[0m, error);
+[31m[1m>[0m [90m156 |[0m       [36mconst[0m { getCarBySlug: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                       [31m[1m^^^^[0m
+  [90m157 |[0m       [36mreturn[0m mockGet(slug);
+  [90m158 |[0m     }
+  [90m159 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:163:37
+Expected a semicolon
+  [90m161 |[0m   } [36mcatch[0m (err) {
+  [90m162 |[0m     console.error([32m'Error in getCarBySlug:'[0m, err);
+[31m[1m>[0m [90m163 |[0m     [36mconst[0m { getCarBySlug: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                     [31m[1m^^^^[0m
+  [90m164 |[0m     [36mreturn[0m mockGet(slug);
+  [90m165 |[0m   }
+  [90m166 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:172:40
+Expected a semicolon
+  [90m170 |[0m
+  [90m171 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m172 |[0m     [36mconst[0m { getFeaturedCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                        [31m[1m^^^^[0m
+  [90m173 |[0m     [36mreturn[0m mockGet();
+  [90m174 |[0m   }
+  [90m175 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:186:42
+Expected a semicolon
+  [90m184 |[0m     [36mif[0m (error) {
+  [90m185 |[0m       console.error([32m'Supabase error in getFeaturedCars:'[0m, error);
+[31m[1m>[0m [90m186 |[0m       [36mconst[0m { getFeaturedCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                          [31m[1m^^^^[0m
+  [90m187 |[0m       [36mreturn[0m mockGet();
+  [90m188 |[0m     }
+  [90m189 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:193:40
+Expected a semicolon
+  [90m191 |[0m   } [36mcatch[0m (err) {
+  [90m192 |[0m     console.error([32m'Error in getFeaturedCars:'[0m, err);
+[31m[1m>[0m [90m193 |[0m     [36mconst[0m { getFeaturedCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                        [31m[1m^^^^[0m
+  [90m194 |[0m     [36mreturn[0m mockGet();
+  [90m195 |[0m   }
+  [90m196 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:202:40
+Expected a semicolon
+  [90m200 |[0m
+  [90m201 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m202 |[0m     [36mconst[0m { getTrendingCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                        [31m[1m^^^^[0m
+  [90m203 |[0m     [36mreturn[0m mockGet(limit);
+  [90m204 |[0m   }
+  [90m205 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:216:42
+Expected a semicolon
+  [90m214 |[0m     [36mif[0m (error) {
+  [90m215 |[0m       console.error([32m'Supabase error in getTrendingCars:'[0m, error);
+[31m[1m>[0m [90m216 |[0m       [36mconst[0m { getTrendingCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                          [31m[1m^^^^[0m
+  [90m217 |[0m       [36mreturn[0m mockGet(limit);
+  [90m218 |[0m     }
+  [90m219 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:231:40
+Expected a semicolon
+  [90m229 |[0m   } [36mcatch[0m (err) {
+  [90m230 |[0m     console.error([32m'Error in getTrendingCars:'[0m, err);
+[31m[1m>[0m [90m231 |[0m     [36mconst[0m { getTrendingCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                        [31m[1m^^^^[0m
+  [90m232 |[0m     [36mreturn[0m mockGet(limit);
+  [90m233 |[0m   }
+  [90m234 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:240:34
+Expected a semicolon
+  [90m238 |[0m
+  [90m239 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m240 |[0m     [36mconst[0m { getBrands: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                  [31m[1m^^^^[0m
+  [90m241 |[0m     [36mreturn[0m mockGet();
+  [90m242 |[0m   }
+  [90m243 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:252:36
+Expected a semicolon
+  [90m250 |[0m     [36mif[0m (error) {
+  [90m251 |[0m       console.error([32m'Supabase error in getBrands:'[0m, error);
+[31m[1m>[0m [90m252 |[0m       [36mconst[0m { getBrands: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                    [31m[1m^^^^[0m
+  [90m253 |[0m       [36mreturn[0m mockGet();
+  [90m254 |[0m     }
+  [90m255 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:260:34
+Expected a semicolon
+  [90m258 |[0m   } [36mcatch[0m (err) {
+  [90m259 |[0m     console.error([32m'Error in getBrands:'[0m, err);
+[31m[1m>[0m [90m260 |[0m     [36mconst[0m { getBrands: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                  [31m[1m^^^^[0m
+  [90m261 |[0m     [36mreturn[0m mockGet();
+  [90m262 |[0m   }
+  [90m263 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:269:41
+Expected a semicolon
+  [90m267 |[0m
+  [90m268 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m269 |[0m     [36mconst[0m { getModelsByBrand: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                         [31m[1m^^^^[0m
+  [90m270 |[0m     [36mreturn[0m mockGet(brand);
+  [90m271 |[0m   }
+  [90m272 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:282:43
+Expected a semicolon
+  [90m280 |[0m     [36mif[0m (error) {
+  [90m281 |[0m       console.error([32m'Supabase error in getModelsByBrand:'[0m, error);
+[31m[1m>[0m [90m282 |[0m       [36mconst[0m { getModelsByBrand: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                           [31m[1m^^^^[0m
+  [90m283 |[0m       [36mreturn[0m mockGet(brand);
+  [90m284 |[0m     }
+  [90m285 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:290:41
+Expected a semicolon
+  [90m288 |[0m   } [36mcatch[0m (err) {
+  [90m289 |[0m     console.error([32m'Error in getModelsByBrand:'[0m, err);
+[31m[1m>[0m [90m290 |[0m     [36mconst[0m { getModelsByBrand: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                         [31m[1m^^^^[0m
+  [90m291 |[0m     [36mreturn[0m mockGet(brand);
+  [90m292 |[0m   }
+  [90m293 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:299:39
+Expected a semicolon
+  [90m297 |[0m
+  [90m298 |[0m   [36mif[0m (!supabase) {
+[31m[1m>[0m [90m299 |[0m     [36mconst[0m { getRelatedCars: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                       [31m[1m^^^^[0m
+  [90m300 |[0m     [36mreturn[0m mockGet(carId, limit);
+  [90m301 |[0m   }
+  [90m302 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:324:41
+Expected a semicolon
+  [90m322 |[0m     [36mif[0m (error) {
+  [90m323 |[0m       console.error([32m'Supabase error in getRelatedCars:'[0m, error);
+[31m[1m>[0m [90m324 |[0m       [36mconst[0m { getRelatedCars: mockGet } [36mfrom[0m 
+[32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                         [31m[1m^^^^[0m
+  [90m325 |[0m       [36mreturn[0m mockGet(carId, limit);
+  [90m326 |[0m     }
+  [90m327 |[0m
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+./src/lib/db/queries/cars.ts:331:39
+Expected a semicolon
+  [90m329 |[0m   } [36mcatch[0m (err) {
+  [90m330 |[0m     console.error([32m'Error in getRelatedCars:'[0m, err);
+[31m[1m>[0m [90m331 |[0m     [36mconst[0m { getRelatedCars: mockGet } [36mfrom[0m [32m'@/lib/api-legacy'[0m;
+  [90m    |[0m                                       [31m[1m^^^^[0m
+  [90m332 |[0m     [36mreturn[0m mockGet(carId, limit);
+  [90m333 |[0m   }
+  [90m334 |[0m }
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Server Component:
+    ./src/lib/db/queries/cars.ts
+    ./src/app/car/[slug]/page.tsx
+
+  Client Component Browser:
+    ./src/lib/db/queries/cars.ts [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Client Component Browser]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/db/queries/cars.ts [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Client Component SSR]
+    ./src/app/browse/BrowseContent.tsx [Server Component]
+    ./src/app/browse/page.tsx [Server Component]
+
+
+    at <unknown> (./src/lib/db/queries/cars.ts:44:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:119:13)
+    at <unknown> (./src/lib/db/queries/cars.ts:133:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:142:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:156:13)
+    at <unknown> (./src/lib/db/queries/cars.ts:163:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:172:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:186:13)
+    at <unknown> (./src/lib/db/queries/cars.ts:193:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:202:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:216:13)
+    at <unknown> (./src/lib/db/queries/cars.ts:231:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:240:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:252:13)
+    at <unknown> (./src/lib/db/queries/cars.ts:260:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:269:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:282:13)
+    at <unknown> (./src/lib/db/queries/cars.ts:290:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:299:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:324:13)
+    at <unknown> (./src/lib/db/queries/cars.ts:331:11)
+    at <unknown> (./src/lib/db/queries/cars.ts:44:32)
+    at <unknown> (./src/lib/db/queries/cars.ts:119:34)
+    at <unknown> (./src/lib/db/queries/cars.ts:133:32)
+    at <unknown> (./src/lib/db/queries/cars.ts:142:37)
+    at <unknown> (./src/lib/db/queries/cars.ts:156:39)
+    at <unknown> (./src/lib/db/queries/cars.ts:163:37)
+    at <unknown> (./src/lib/db/queries/cars.ts:172:40)
+    at <unknown> (./src/lib/db/queries/cars.ts:186:42)
+    at <unknown> (./src/lib/db/queries/cars.ts:193:40)
+    at <unknown> (./src/lib/db/queries/cars.ts:202:40)
+    at <unknown> (./src/lib/db/queries/cars.ts:216:42)
+    at <unknown> (./src/lib/db/queries/cars.ts:231:40)
+    at <unknown> (./src/lib/db/queries/cars.ts:240:34)
+    at <unknown> (./src/lib/db/queries/cars.ts:252:36)
+    at <unknown> (./src/lib/db/queries/cars.ts:260:34)
+    at <unknown> (./src/lib/db/queries/cars.ts:269:41)
+    at <unknown> (./src/lib/db/queries/cars.ts:282:43)
+    at <unknown> (./src/lib/db/queries/cars.ts:290:41)
+    at <unknown> (./src/lib/db/queries/cars.ts:299:39)
+    at <unknown> (./src/lib/db/queries/cars.ts:324:41)
+    at <unknown> (./src/lib/db/queries/cars.ts:331:39)

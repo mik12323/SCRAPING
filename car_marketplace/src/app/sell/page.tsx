@@ -325,11 +325,11 @@ export default function SellCarPage() {
                     alt={`Preview ${index + 1}`}
                     className="w-full h-24 object-cover rounded"
                   />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
-                  >
+                   <button
+                     type="button"
+                     onClick={() => removeImage(index)}
+                     className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center cursor-pointer"
+                   >
                     ×
                   </button>
                 </div>
@@ -341,7 +341,7 @@ export default function SellCarPage() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-8 w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400"
+          className="mt-8 w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 cursor-pointer"
         >
           {loading ? 'Submitting...' : 'Submit Listing'}
         </button>

@@ -45,7 +45,7 @@ export default function CarOwnerActions({ carId, carSlug, userId }: CarOwnerActi
         </a>
         <button
           onClick={() => setShowDeleteConfirm(true)}
-          className="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
+          className="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium cursor-pointer"
         >
           Delete
         </button>
@@ -59,14 +59,14 @@ export default function CarOwnerActions({ carId, carSlug, userId }: CarOwnerActi
             <div className="flex gap-3">
               <button
                 onClick={() => setShowDeleteConfirm(false)}
-                className="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors"
+                className="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+                className="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {deleting ? 'Deleting...' : 'Delete'}
               </button>

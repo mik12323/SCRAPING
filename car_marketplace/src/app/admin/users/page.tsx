@@ -159,7 +159,7 @@ export default function AdminUsersPage() {
                   <td className="px-6 py-4">
                     <button
                       onClick={() => toggleAdmin(u.id, u.is_admin)}
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      className={`px-3 py-1 rounded-full text-xs font-medium cursor-pointer ${
                         u.is_admin
                           ? 'bg-green-100 text-green-700 hover:bg-green-200'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -183,7 +183,7 @@ export default function AdminUsersPage() {
                       {u.id !== user.id && (
                         <button
                           onClick={() => handleDeleteUser(u.id)}
-                          className="text-red-600 hover:underline text-sm"
+                          className="text-red-600 hover:underline text-sm cursor-pointer"
                         >
                           Delete
                         </button>

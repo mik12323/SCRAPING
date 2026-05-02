@@ -246,7 +246,7 @@ export default function EditCarPage({ params }: { params: Promise<{ id: string }
           <button
             type="button"
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 cursor-pointer"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -259,7 +259,7 @@ export default function EditCarPage({ params }: { params: Promise<{ id: string }
         <div className="flex gap-4 justify-center">
           <button
             onClick={() => mutate()}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 cursor-pointer"
           >
             Retry
           </button>
@@ -274,7 +274,7 @@ export default function EditCarPage({ params }: { params: Promise<{ id: string }
         <button
           type="button"
           onClick={() => router.back()}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

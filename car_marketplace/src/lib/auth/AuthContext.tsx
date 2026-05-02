@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { supabase } from '@/lib/db/supabase-client';
 import { UserProfile, getUserById, getUserByUsername } from '@/lib/db/queries/users';
+import { createAdminNotification } from '@/lib/db/queries/notifications';
 
 interface AuthContextType {
   user: UserProfile | null;
@@ -98,6 +99,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.error('Profile creation error:', profileError);
         return { error: { message: 'Failed to create profile. Please try again.' } };
       }
+
+      // Notify admins about new user registration
+      await createAdminNotification(
+        null,
+        'listing_approved', // Reuse type or create 'user_registered' if preferred
+        'New User Registered',
+        `New user registered: ${username}`
+      );
+
       return { error: null };
     }
     return { error };

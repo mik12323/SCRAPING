@@ -142,7 +142,7 @@ export default function MyCarsPage() {
                       onClick={() => {
                         router.push(`/my-cars/edit/${car.id}`);
                       }}
-                      className="text-sm text-blue-600 hover:underline mt-2"
+                      className="text-sm text-blue-600 hover:underline mt-2 cursor-pointer"
                     >
                       Edit Again
                     </button>
@@ -164,7 +164,7 @@ export default function MyCarsPage() {
                   </Link>
                   <button
                     onClick={() => handleDelete(car.id)}
-                    className="flex-1 bg-red-50 text-red-600 py-2 rounded hover:bg-red-100"
+                    className="flex-1 bg-red-50 text-red-600 py-2 rounded hover:bg-red-100 cursor-pointer"
                   >
                     Delete
                   </button>

@@ -37,25 +37,25 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="hover:text-yellow-400 transition-colors">
+            <Link href="/" className="hover:text-yellow-400 transition-colors cursor-pointer">
               Home
             </Link>
-            <Link href="/browse" className="hover:text-yellow-400 transition-colors">
+            <Link href="/browse" className="hover:text-yellow-400 transition-colors cursor-pointer">
               Browse Cars
             </Link>
-            <Link href="/sell" className="hover:text-yellow-400 transition-colors">
+            <Link href="/sell" className="hover:text-yellow-400 transition-colors cursor-pointer">
               Sell Your Car
             </Link>
-            <Link href="/about" className="hover:text-yellow-400 transition-colors">
+            <Link href="/about" className="hover:text-yellow-400 transition-colors cursor-pointer">
               About
             </Link>
 
             {user ? (
               <>
-                <Link href="/my-cars" className="hover:text-yellow-400 transition-colors">
+                <Link href="/my-cars" className="hover:text-yellow-400 transition-colors cursor-pointer">
                   My Cars
                 </Link>
-                <Link href="/notifications" className="hover:text-yellow-400 transition-colors relative">
+                <Link href="/notifications" className="hover:text-yellow-400 transition-colors cursor-pointer relative">
                   Notifications
                   {unreadCount > 0 && (
                     <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
@@ -64,7 +64,7 @@ export default function Navbar() {
                   )}
                 </Link>
                 {isAdmin && (
-                  <Link href="/admin" className="hover:text-yellow-400 transition-colors">
+                  <Link href="/admin" className="hover:text-yellow-400 transition-colors cursor-pointer">
                     Admin
                   </Link>
                 )}
@@ -77,10 +77,10 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link href="/login" className="hover:text-yellow-400 transition-colors">
+                <Link href="/login" className="hover:text-yellow-400 transition-colors cursor-pointer">
                   Login
                 </Link>
-                <Link href="/register" className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-colors">
+                <Link href="/register" className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-colors cursor-pointer">
                   Register
                 </Link>
               </>
