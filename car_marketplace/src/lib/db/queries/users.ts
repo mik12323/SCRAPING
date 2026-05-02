@@ -22,9 +22,9 @@ export async function getUserById(id: string): Promise<UserProfile | null> {
       .from('users')
       .select('*')
       .eq('id', id)
-      .single();
+      .maybeSingle();
 
-    if (error || !data) {
+    if (error) {
       console.error('Supabase error in getUserById:', error);
       return null;
     }
@@ -42,9 +42,9 @@ export async function getUserByUsername(username: string): Promise<UserProfile |
       .from('users')
       .select('*')
       .eq('name', username)
-      .single();
+      .maybeSingle();
 
-    if (error || !data) {
+    if (error) {
       console.error('Supabase error in getUserByUsername:', error);
       return null;
     }
@@ -62,9 +62,9 @@ export async function getUserByPhone(phone: string): Promise<UserProfile | null>
       .from('users')
       .select('*')
       .eq('phone', phone)
-      .single();
+      .maybeSingle();
 
-    if (error || !data) {
+    if (error) {
       console.error('Supabase error in getUserByPhone:', error);
       return null;
     }

@@ -175,7 +175,7 @@ export default function BrowseContent() {
                   <div className="flex flex-wrap justify-center gap-3">
                     {trendingCars.map((car: TrendingCar) => (
                       <a
-                        key={car.brand + car.model}
+                        key={car.displayName}
                         href={`/browse?brand=${encodeURIComponent(car.brand)}&model=${encodeURIComponent(car.model)}`}
                         className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 py-2 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
                       >

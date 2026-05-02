@@ -27,6 +27,7 @@ export default function CarCard({ car }: CarCardProps) {
               src={car.thumbnail}
               alt={`${car.year} ${car.brand} ${car.model} for sale Philippines`}
               fill
+              priority
               className="object-cover group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
