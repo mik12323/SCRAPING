@@ -63,7 +63,7 @@ export default async function HomePage() {
               <div className="flex flex-wrap justify-center gap-3">
                 {trendingCars.map((car: TrendingCar) => (
                   <Link
-                    key={car.brand + car.model}
+                    key={car.displayName}
                     href={`/browse?brand=${car.brand}&model=${car.model}`}
                     className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 py-2 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
                   >
