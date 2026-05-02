@@ -89,14 +89,14 @@ export default async function HomePage() {
                   className="group"
                 >
                   <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col">
-                    <div className="relative h-48 overflow-hidden bg-gray-100">
+                    <div className="relative h-64 overflow-hidden bg-gray-100">
                       {car.thumbnail ? (
                         <div className="relative w-full h-full">
                           <Image
                             src={car.thumbnail}
                             alt={`${car.year} ${car.brand} ${car.model} for sale Philippines`}
                             fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="object-contain group-hover:scale-105 transition-transform duration-300"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
                         </div>

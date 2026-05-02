@@ -10,11 +10,12 @@ export {
   getCars,
   getCarBySlug,
   getFeaturedCars,
-  getTrendingCars,
   getBrands,
   getModelsByBrand,
   getRelatedCars,
 } from './db/queries/cars';
+
+export { getTrendingCars } from './db/queries/tracking';
 
 export { formatPrice, formatDisplayPrice } from './api-legacy';
 

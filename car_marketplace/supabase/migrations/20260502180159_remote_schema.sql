@@ -45,7 +45,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
 
 
 
-CREATE OR REPLACE FUNCTION "public"."get_trending_cars"("limit_count" integer DEFAULT 5) RETURNS TABLE("brand" "text", "model" "text", "display_name" "text", "clicks" bigint, "body_type" "text", "fuel_type" "text", "transmission" "text")
+CREATE OR REPLACE FUNCTION "public"."get_trending_cars"("limit_count" integer DEFAULT 3) RETURNS TABLE("brand" "text", "model" "text", "display_name" "text", "clicks" bigint, "body_type" "text", "fuel_type" "text", "transmission" "text")
     LANGUAGE "plpgsql" SECURITY DEFINER
     AS $$
 BEGIN
@@ -61,7 +61,9 @@ BEGIN
   FROM public.listings l
   LEFT JOIN public.listing_views lv ON l.id = lv.listing_id
   WHERE l.status = 'approved'
+    AND lv.view_date = CURRENT_DATE
   GROUP BY l.id, l.brand, l.model, l.year, l.body_type, l.fuel_type, l.transmission
+  HAVING COALESCE(SUM(lv.view_count), 0) >= 5
   ORDER BY clicks DESC
   LIMIT limit_count;
 END;

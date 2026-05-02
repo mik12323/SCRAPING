@@ -47,8 +47,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Function to get trending cars
-CREATE OR REPLACE FUNCTION public.get_trending_cars(limit_count int DEFAULT 5)
+-- Function to get trending cars (top 3, daily only, min 5 clicks)
+CREATE OR REPLACE FUNCTION public.get_trending_cars(limit_count int DEFAULT 3)
 RETURNS TABLE (
   brand text,
   model text,
@@ -71,7 +71,9 @@ BEGIN
   FROM public.listings l
   LEFT JOIN public.listing_views lv ON l.id = lv.listing_id
   WHERE l.status = 'approved'
+    AND lv.view_date = CURRENT_DATE
   GROUP BY l.id, l.brand, l.model, l.year, l.body_type, l.fuel_type, l.transmission
+  HAVING COALESCE(SUM(lv.view_count), 0) >= 5
   ORDER BY clicks DESC
   LIMIT limit_count;
 END;
