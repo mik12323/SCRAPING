@@ -1,0 +1,90 @@
+# Database Relationship Diagram
+
+## Tables & Relationships
+
+┌─────────────────────────────────────────────────────────────┐
+│                        USERS                                  │
+├─────────────────────────────────────────────────────────────┤
+│  id (PK, UUID)  ───────────────────────┐                  │
+│  name                                       │                  │
+│  phone                                      │                  │
+│  email (optional)                          │                  │
+│  is_admin                                   │                  │
+│  created_at                                 │                  │
+└──────────────────────────────────────────────┼──────────────────┘
+                                                           │
+                                                           │ 1:N
+                                                           │
+┌──────────────────────────────────────────────┼──────────────────┐
+│                     LISTINGS                  │                  │
+├──────────────────────────────────────────────┼──────────────────┤
+│  id (PK, UUID)                            │                  │
+│  user_id (FK → users.id)  ◄───────────────┘                  │
+│  slug (UNIQUE)                                                 │
+│  brand                                                        │
+│  model                                                        │
+│  year                                                         │
+│  price                                                        │
+│  original_price                                               │
+│  body_type                                                    │
+│  fuel_type                                                    │
+│  transmission                                                 │
+│  location                                                     │
+│  description                                                  │
+│  images (TEXT[])                                              │
+│  status (pending/approved/rejected)                           │
+│  created_at                                                   │
+│  updated_at                                                   │
+└──────────────────────────────────────────────┬──────────────────┘
+                                                           │
+                                                           │ 1:N
+                                                           │
+┌──────────────────────────────────────────────┼──────────────────┐
+│                  LISTING_VIEWS                                │
+├──────────────────────────────────────────────┼──────────────────┤
+│  id (PK, UUID)                            │                  │
+│  listing_id (FK → listings.id) ◄──────────┘                  │
+│  view_date                                                    │
+│  view_count                                                   │
+└─────────────────────────────────────────────────────────────────┘
+
+## Relationship Summary
+
+| Parent Table | Child Table    | Relationship | Foreign Key     | Delete Action |
+|--------------|----------------|--------------|------------------|--------------|
+| users        | listings       | 1-to-many    | listings.user_id | CASCADE      |
+| listings     | listing_views  | 1-to-many    | listing_views.listing_id | CASCADE |
+
+## Index Strategy
+
+| Table        | Column(s)              | Type      | Purpose                        |
+|--------------|------------------------|-----------|--------------------------------|
+| users        | id                     | Primary   | Unique user identification      |
+| users        | email                  | Index    | Fast email lookup (optional)    |
+| users        | phone                  | Index    | Fast phone lookup              |
+| listings     | id                     | Primary   | Unique listing identification   |
+| listings     | slug                   | Unique   | SEO-friendly URL lookups       |
+| listings     | brand                  | Index    | Filter by brand                |
+| listings     | status                 | Index    | Filter by approval status      |
+| listings     | created_at             | Index    | Sort by newest                 |
+| listings     | user_id                | Index    | Get user's listings           |
+| listings     | brand, model           | Composite | Combined filter               |
+| listings     | status, created_at      | Composite | Approved listings by date      |
+| listing_views| listing_id             | Index    | Get views for a listing        |
+| listing_views| view_date              | Index    | Get views by date              |
+
+## Data Types Reference
+
+| Column         | Type                    | Notes                                |
+|----------------|-------------------------|--------------------------------------|
+| id             | UUID                    | Primary key, auto-generated            |
+| user_id        | UUID                    | Foreign key to users table             |
+| listing_id     | UUID                    | Foreign key to listings table           |
+| slug           | VARCHAR(255)            | Unique, SEO-friendly URL              |
+| price         | INTEGER                 | Store in cents/pesos, no decimals      |
+| images        | TEXT[]                  | PostgreSQL array for image URLs         |
+| status        | VARCHAR(20)            | Enum: pending/approved/rejected       |
+| created_at    | TIMESTAMP WITH TZ       | Auto-set on insert                     |
+| updated_at    | TIMESTAMP WITH TZ       | Auto-updated on change                 |
+| view_date     | DATE                    | Date only, for daily aggregation       |
+| view_count    | INTEGER                 | Counter for the day                   |

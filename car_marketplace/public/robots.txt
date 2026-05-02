@@ -1,0 +1,19 @@
+# https://usedcars.ph/robots.txt
+
+User-agent: *
+Allow: /
+
+# Main pages
+Allow: /
+Allow: /browse
+Allow: /car/
+
+# Block private/internal pages
+Disallow: /admin
+Disallow: /my-cars
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
+
+# Sitemap
+Sitemap: https://usedcars.ph/sitemap.xml
