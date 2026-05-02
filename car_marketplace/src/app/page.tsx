@@ -61,9 +61,9 @@ export default async function HomePage() {
             <div className="container mx-auto">
               <h2 className="text-2xl font-bold text-center mb-6">Trending Today</h2>
               <div className="flex flex-wrap justify-center gap-3">
-                {trendingCars.map((car: TrendingCar) => (
+                {trendingCars.map((car: TrendingCar, idx: number) => (
                   <Link
-                    key={car.displayName}
+                    key={`${car.displayName}-${idx}`}
                     href={`/browse?brand=${car.brand}&model=${car.model}`}
                     className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 py-2 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
                   >

@@ -173,9 +173,9 @@ export default function BrowseContent() {
                 <div className="mt-8">
                   <h3 className="text-xl font-bold text-center mb-4">Trending Today</h3>
                   <div className="flex flex-wrap justify-center gap-3">
-                    {trendingCars.map((car: TrendingCar) => (
+                    {trendingCars.map((car: TrendingCar, idx: number) => (
                       <a
-                        key={car.displayName}
+                        key={`${car.displayName}-${idx}`}
                         href={`/browse?brand=${encodeURIComponent(car.brand)}&model=${encodeURIComponent(car.model)}`}
                         className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 py-2 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
                       >

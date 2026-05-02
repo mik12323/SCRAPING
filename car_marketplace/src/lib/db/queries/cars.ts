@@ -183,7 +183,7 @@ export async function getTrendingCars(limit: number = 5): Promise<TrendingCar[]>
   try {
     const { data, error } = await supabase
       .from('listings')
-      .select('brand, model, body_type, fuel_type, transmission')
+      .select('brand, model, year, body_type, fuel_type, transmission')
       .eq('status', 'approved')
       .order('created_at', { ascending: false })
       .limit(limit);
@@ -193,10 +193,10 @@ export async function getTrendingCars(limit: number = 5): Promise<TrendingCar[]>
       return [];
     }
 
-    return (data || []).map((car: { brand: string; model: string; body_type?: string; fuel_type?: string; transmission?: string }) => ({
+    return (data || []).map((car: { brand: string; model: string; year?: number; body_type?: string; fuel_type?: string; transmission?: string }) => ({
       brand: car.brand,
       model: car.model,
-      displayName: `${car.brand} ${car.model}`,
+      displayName: `${car.year ? car.year + ' ' : ''}${car.brand} ${car.model}`,
       clicks: 0,
       bodyType: car.body_type || '',
       fuelType: car.fuel_type || '',
