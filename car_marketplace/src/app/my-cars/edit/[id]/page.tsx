@@ -7,6 +7,7 @@ import { supabase } from '@/lib/db/supabase-client';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { BODY_TYPES } from '@/lib/types';
 import type { Car } from '@/lib/types';
+import { generateSlug, makeSlugUnique, shouldRegenerateSlug } from '@/lib/slug-utils';
 
 // Optimized column selection - only fetch what we need
 const CAR_EDIT_COLUMNS = [
@@ -171,30 +172,38 @@ export default function EditCarPage({ params }: { params: Promise<{ id: string }
             editProposal[dbKey] = { from: carValue || null, to: formValue || null };
           }
         });
+
       }
 
-       // Update slug if brand/model/price changed
-       const slug = `${formData.brand.toLowerCase()}-${formData.model.toLowerCase().replace(/\s+/g, '-')}-${formData.year}-${formData.price}`;
+      // Update slug only if relevant fields changed
+      const shortId = car.id.replace(/-/g, '').slice(-4);
+      const color = formData.color || undefined;
+      let slug = car.slug; // Keep original by default
 
-       const isAdmin = user?.is_admin;
+      if (shouldRegenerateSlug(car, formData)) {
+        const baseSlug = generateSlug(formData.brand, formData.model, formData.year, parseInt(formData.price), shortId, color);
+        // Make sure slug is unique
+        slug = await makeSlugUnique(baseSlug, car.id);
+      }
 
-       const updateData: any = {
-         brand: formData.brand,
-         model: formData.model,
-         year: parseInt(formData.year.toString()),
-         price: parseInt(formData.price),
-         original_price: formData.originalPrice ? parseInt(formData.originalPrice) : null,
-         mileage: formData.mileage ? parseInt(formData.mileage) : null,
-         transmission: formData.transmission,
-         fuel_type: formData.fuelType,
-         body_type: formData.bodyType,
-         color: formData.color,
-         location: formData.location,
-         description: formData.description,
-         slug,
-         updated_at: new Date().toISOString(),
-       };
+      const isAdmin = user?.is_admin;
 
+      const updateData: any = {
+        brand: formData.brand,
+        model: formData.model,
+        year: parseInt(formData.year.toString()),
+        price: parseInt(formData.price),
+        original_price: formData.originalPrice ? parseInt(formData.originalPrice) : null,
+        mileage: formData.mileage ? parseInt(formData.mileage) : null,
+        transmission: formData.transmission,
+        fuel_type: formData.fuelType,
+        body_type: formData.bodyType,
+        color: formData.color,
+        location: formData.location,
+        description: formData.description,
+        slug,
+        updated_at: new Date().toISOString(),
+      };
        if (isAdmin) {
          // Admin edits are auto-approved
          updateData.status = 'approved';
@@ -216,7 +225,11 @@ export default function EditCarPage({ params }: { params: Promise<{ id: string }
 
       if (updateError) {
         console.error('Update error:', updateError);
-        setError('Failed to update listing. Please try again.');
+        if (updateError.code === '23505' || updateError.message?.includes('slug_key')) {
+          setError('It looks like this exact listing already exists. Please check your active listings or add a unique detail to the title.');
+        } else {
+          setError('Failed to update listing. Please try again.');
+        }
       } else {
         // Invalidate cache after successful update
         await mutate();

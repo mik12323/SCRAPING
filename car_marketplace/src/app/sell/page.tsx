@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { insertListing } from '@/lib/db/mutations/listings';
+import { supabase } from '@/lib/db/supabase-client';
+import { generateSlug, makeSlugUnique } from '@/lib/slug-utils';
 
 export default function SellCarPage() {
   const { user } = useAuth();
@@ -85,11 +87,13 @@ export default function SellCarPage() {
         return;
       }
 
-      // Create slug
-      const slug = `${formData.brand.toLowerCase()}-${formData.model.toLowerCase().replace(/\s+/g, '-')}-${formData.year}-${formData.price}`;
+      // Create base slug with short ID (will be generated after insert)
+      // For new listings, we'll update the slug after we get the ID
+      const baseSlug = `${formData.brand.toLowerCase()}-${formData.model.toLowerCase().replace(/\s+/g, '-')}-${formData.year}-${formData.price}`;
+      const tempSlug = `${baseSlug}-temp`;
 
-      // Insert listing
-      const { error: insertError } = await insertListing({
+      // Insert listing first to get the ID
+      const { data: newListing, error: insertError } = await insertListing({
         user_id: user.id,
         brand: formData.brand,
         model: formData.model,
@@ -104,16 +108,42 @@ export default function SellCarPage() {
         location: formData.location,
         description: formData.description,
         images: imageUrls,
-        slug,
+        slug: tempSlug, // Temporary slug
         status: 'pending',
       });
 
       if (insertError) {
         console.error('Insert error:', insertError);
-        setError('Failed to create listing. Please try again.');
-      } else {
-        router.push('/my-cars');
+        if (insertError.code === '23505' || insertError.message?.includes('slug_key')) {
+          setError('It looks like this exact listing already exists. Please check your active listings or add a unique detail to the title.');
+        } else {
+          setError('Failed to create listing. Please try again.');
+        }
+        setLoading(false);
+        return;
       }
+
+      // Generate proper slug with short ID
+      if (newListing?.id) {
+        const shortId = newListing.id.replace(/-/g, '').slice(-4);
+        const color = formData.color || undefined;
+        const properSlug = generateSlug(formData.brand, formData.model, formData.year, parseInt(formData.price), shortId, color);
+
+        // Make sure it's unique
+        const uniqueSlug = await makeSlugUnique(properSlug);
+
+        // Update the listing with the proper slug
+        const { error: updateError } = await supabase
+          .from('listings')
+          .update({ slug: uniqueSlug })
+          .eq('id', newListing.id);
+
+        if (updateError) {
+          console.error('Slug update error:', updateError);
+        }
+      }
+
+      router.push('/my-cars');
     } catch (err: any) {
       console.error('Sell page error:', err);
       setError('An error occurred. Please try again.');
