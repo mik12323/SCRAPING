@@ -35,7 +35,16 @@ export async function getTrendingCars(limit: number = 5) {
       return [];
     }
 
-    return data || [];
+    // Map snake_case to camelCase
+    return (data || []).map((car: any) => ({
+      brand: car.brand,
+      model: car.model,
+      displayName: car.display_name || `${car.brand} ${car.model}`,
+      clicks: car.clicks || 0,
+      bodyType: car.body_type || '',
+      fuelType: car.fuel_type || '',
+      transmission: car.transmission || ''
+    }));
   } catch (err) {
     console.error('Error in getTrendingCars:', err);
     return [];
