@@ -83,6 +83,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return { error };
     }
 
+    // Immediately update user state after successful sign in
+    if (data.user) {
+      const profile = await getUserById(data.user.id);
+      setUser(profile);
+      setIsAdmin(profile?.is_admin || false);
+    }
+
     return { error: null };
   };
 

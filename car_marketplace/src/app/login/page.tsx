@@ -25,7 +25,8 @@ export default function LoginPage() {
       console.error('Login error:', error);
       setError('Invalid username or password. Please try again.');
     } else {
-      router.push('/');
+      // Force a hard redirect to ensure session is picked up
+      window.location.href = '/';
     }
   };
 
