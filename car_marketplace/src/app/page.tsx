@@ -89,17 +89,15 @@ export default async function HomePage() {
                   className="group"
                 >
                   <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col">
-                    <div className="relative h-64 overflow-hidden bg-gray-100">
+                    <div className="relative aspect-[4/3] overflow-hidden">
                       {car.thumbnail ? (
-                        <div className="relative w-full h-full">
-                          <Image
-                            src={car.thumbnail}
-                            alt={`${car.year} ${car.brand} ${car.model} for sale Philippines`}
-                            fill
-                            className="object-contain group-hover:scale-105 transition-transform duration-300"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
-                        </div>
+                        <Image
+                          src={car.thumbnail}
+                          alt={`${car.year} ${car.brand} ${car.model} for sale Philippines`}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-lg"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-400">
                           No Photo
@@ -112,7 +110,7 @@ export default async function HomePage() {
                       )}
                     </div>
 
-                    <div className="p-4 flex-1 flex flex-col">
+                    <div className="p-3 flex-1 flex flex-col">
                       <h3 className="font-bold text-lg mb-1 group-hover:text-blue-600 transition-colors">
                         {car.year} {car.brand} {car.model}
                       </h3>
