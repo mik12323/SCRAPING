@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface ImageGalleryProps {
   images: string[];
@@ -11,27 +12,71 @@ interface ImageGalleryProps {
 export default function ImageGallery({ images, alt = 'Car image' }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [direction, setDirection] = useState(0);
 
-  if (!images || images.length === 0) {
-    return (
-      <div className="w-full h-96 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400">
-        No Images Available
-      </div>
-    );
-  }
+  // Keyboard support for lightbox
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        setDirection(1);
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      } else if (e.key === 'ArrowLeft') {
+        setDirection(-1);
+        setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+      } else if (e.key === 'Escape') {
+        setIsLightboxOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen, images.length]);
 
   const nextImage = () => {
+    setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % images.length);
   };
 
   const prevImage = () => {
+    setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const goToIndex = (idx: number) => {
+    setDirection(idx > currentIndex ? 1 : -1);
+    setCurrentIndex(idx);
   };
 
   const openLightbox = (index: number) => {
     setCurrentIndex(index);
     setIsLightboxOpen(true);
   };
+
+  // Animation variants
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0
+    }),
+    center: {
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction: number) => ({
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0
+    })
+  };
+
+  if (!images || images.length === 0) {
+    return (
+      <div className="w-full h-96 bg-zinc-900 rounded-xl flex items-center justify-center text-gray-400">
+        No Images Available
+      </div>
+    );
+  }
 
   return (
     <>
@@ -40,29 +85,46 @@ export default function ImageGallery({ images, alt = 'Car image' }: ImageGallery
           <>
             <button
               onClick={prevImage}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 z-10 transition-all"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/75 text-white p-3 rounded-full transition-all"
             >
               ‹
             </button>
             <button
               onClick={nextImage}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 z-10 transition-all"
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/75 text-white p-3 rounded-full transition-all"
             >
               ›
             </button>
           </>
         )}
 
-        <div className="relative cursor-pointer h-96" onClick={() => openLightbox(currentIndex)}>
-          <Image
-            src={images[currentIndex]}
-            alt={`${alt} - ${currentIndex + 1}`}
-            fill
-            className="object-cover rounded-xl"
-            priority={currentIndex === 0}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 800px"
-          />
-          <div className="absolute top-3 right-3 bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-sm">
+        <div
+          className="relative h-96 bg-zinc-900 rounded-xl overflow-hidden cursor-pointer"
+          onClick={() => openLightbox(currentIndex)}
+        >
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={images[currentIndex]}
+                alt={`${alt} - ${currentIndex + 1}`}
+                fill
+                className="object-contain"
+                priority={currentIndex === 0}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 800px"
+              />
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="absolute top-3 right-3 bg-black/60 text-white px-3 py-1 rounded-full text-sm z-10">
             {currentIndex + 1} / {images.length}
           </div>
         </div>
@@ -72,9 +134,9 @@ export default function ImageGallery({ images, alt = 'Car image' }: ImageGallery
             {images.map((img, idx) => (
               <button
                 key={idx}
-                onClick={() => setCurrentIndex(idx)}
+                onClick={() => goToIndex(idx)}
                 className={`shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-                  idx === currentIndex ? 'border-blue-600' : 'border-transparent'
+                  idx === currentIndex ? 'border-blue-600' : 'border-transparent opacity-60 hover:opacity-100'
                 }`}
               >
                 <Image src={img} alt="" width={80} height={64} className="w-full h-full object-cover" />
@@ -84,14 +146,15 @@ export default function ImageGallery({ images, alt = 'Car image' }: ImageGallery
         )}
       </div>
 
+      {/* Lightbox Modal */}
       {isLightboxOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md"
           onClick={() => setIsLightboxOpen(false)}
         >
           <button
             onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
-            className="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 z-60"
+            className="fixed top-4 right-4 text-white text-4xl hover:text-gray-300 z-60"
           >
             ×
           </button>
@@ -113,16 +176,33 @@ export default function ImageGallery({ images, alt = 'Car image' }: ImageGallery
             </>
           )}
 
-          <Image
-            src={images[currentIndex]}
-            alt={`${alt} - ${currentIndex + 1}`}
-            width={1200}
-            height={800}
-            className="max-h-[90vh] max-w-[90vw] object-contain"
+          <div
+            className="relative w-[90vw] h-[90vh]"
             onClick={(e) => e.stopPropagation()}
-          />
+          >
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
+              <motion.div
+                key={currentIndex}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={images[currentIndex]}
+                  alt={`${alt} - ${currentIndex + 1}`}
+                  fill
+                  className="object-contain"
+                  sizes="90vw"
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black bg-opacity-60 px-4 py-2 rounded-full">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/60 px-4 py-2 rounded-full z-60">
             {currentIndex + 1} / {images.length}
           </div>
         </div>
