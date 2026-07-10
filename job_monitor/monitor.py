@@ -212,7 +212,7 @@ def run_once(config):
                 }
                 send_discord(webhook_url, job, snippet_length)
                 new_count += 1
-                print(f"[NEW] {job['title']} — {job['salary']}")
+                print(f"[NEW] {job['title']} — {job['salary']} — Posted: {job['posted_date'][:10] if job['posted_date'] else 'Unknown'}")
 
         if i < len(keywords) - 1:
             print(f"[WAIT] Sleeping {crawl_delay}s before next keyword...")
