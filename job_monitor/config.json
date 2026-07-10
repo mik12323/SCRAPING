@@ -1,0 +1,12 @@
+{
+  "keywords": [
+    "entry level",
+    "virtual assistant",
+    "no experience",
+    "data entry"
+  ],
+  "discord_webhook": "",
+  "poll_interval_minutes": 10,
+  "crawl_delay_seconds": 5,
+  "description_snippet_length": 150
+}

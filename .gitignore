@@ -39,6 +39,7 @@ trading_history.json
 trading_context.json
 news_cache.json
 seller_history.json
+seen_ids.json
 
 # Browser profiles
 chrome_profile/
