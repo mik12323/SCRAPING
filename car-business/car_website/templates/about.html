@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Used Cars Philippines - Your Trusted Car Agent in Metro Manila</title>
+    
+    <meta name="description" content="Learn about Used Cars Philippines. With 5+ years in the used car market, we help connect buyers and sellers across Metro Manila and Mindanao. Transparent and reliable.">
+    <meta name="keywords" content="about Used Cars Philippines, car agent Manila, trusted used car seller Philippines, car broker Metro Manila">
+    <meta name="author" content="Used Cars Philippines">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.usedcarsphilippines.com.ph{{ request.path }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="About Used Cars Philippines - Your Trusted Car Agent">
+    <meta property="og:description" content="With 5+ years in the used car market, we help connect buyers and sellers across Metro Manila and Mindanao.">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:site_name" content="Used Cars Philippines">
+    <meta property="og:locale" content="en_PH">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="About Used Cars Philippines - Your Trusted Car Agent">
+    <meta name="twitter:description" content="With 5+ years in the used car market, we help connect buyers and sellers across Metro Manila and Mindanao.">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Used Cars Philippines",
+      "url": "https://www.usedcarsphilippines.com.ph/",
+      "logo": "https://www.usedcarsphilippines.com.ph/static/favicon.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+639970946623",
+        "contactType": "sales",
+        "areaServed": "PH"
+      },
+      "sameAs": [
+        "https://www.facebook.com/mikoy.dimaro/"
+      ]
+    }
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f7f6; }
+        .info-section { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .contact-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); height: 100%; text-align: center; }
+        .contact-icon { font-size: 2.5rem; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
+            <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" height="35" class="me-2">
+            Used Cars Philippines
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/browse">Browse Cars</a></li>
+                <li class="nav-item"><a class="nav-link" href="/sell-car">Sell Your Car</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/about">About</a></li>
+                {% if session.get('user_id') %}
+                <li class="nav-item"><a class="nav-link" href="/my-cars">My Cars</a></li>
+                {% if session.get('is_admin') %}
+                <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container mb-5">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">About</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="info-section mb-4">
+                <h1 class="fw-bold mb-3">About Used Cars Philippines</h1>
+                <p class="lead">I'm a car agent based in the Philippines, connecting buyers with quality pre-owned vehicles across Metro Manila and Mindanao.</p>
+                
+                <h2 class="fs-4 fw-bold mt-4">My Story</h2>
+                <p>It all started about 5 years ago when I helped sell our family's cars. That experience taught me the ins and outs of the used car market — how to price a vehicle, what buyers look for, and how to close a deal that both parties are happy with.</p>
+                <p>About 2 years ago, I turned that experience into a full-time service as an agent. Today, I help car owners find buyers and help buyers find the right car at the right price. I don't own the cars myself — I work directly with the owners to get you the best deal possible.</p>
+                
+                <h2 class="fs-4 fw-bold mt-4">How I Work</h2>
+                <p>When a car owner wants to sell their vehicle, they give me the details — brand, model, year, price, and condition. I then list it on this website and work to find a serious buyer.</p>
+                <p>When a buyer shows interest, I coordinate between both parties. I help negotiate the price and make sure everything is clear before the deal. I only earn a commission when the sale is successfully completed — so my goal is always to make the deal happen.</p>
+                
+                <h2 class="fs-4 fw-bold mt-4">How Commission Works</h2>
+                <p>As an agent, I charge a commission fee from the car owner when I successfully sell their vehicle. The commission is agreed upon upfront before listing. Payment methods include:</p>
+                <ul>
+                    <li><strong>GCash</strong> — Fast and convenient digital transfer</li>
+                    <li><strong>Bank Transfer</strong> — Direct to your bank account</li>
+                    <li><strong>Cash</strong> — In-person payment during the deal</li>
+                </ul>
+                
+                <h2 class="fs-4 fw-bold mt-4">Will I Be Present at the Deal?</h2>
+                <p>If the location allows, I can be physically present during the transaction to help facilitate the deal and ensure everything goes smoothly. For deals in areas I can't reach (like Mindanao), I coordinate everything remotely and you deal directly with the owner — but I've already done the groundwork to make sure both parties are comfortable and the terms are clear.</p>
+                
+                <h2 class="fs-4 fw-bold mt-4">Areas I Cover</h2>
+                <p>I primarily operate in <strong>Metro Manila</strong>, but I also handle deals in <strong>Mindanao</strong> and can coordinate for other areas as well. Distance is not a barrier — I've successfully closed deals remotely and can do the same for you.</p>
+            </div>
+
+            <h2 class="fw-bold mb-3 text-center">Get in Touch</h2>
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="contact-card">
+                        <div class="contact-icon">💬</div>
+                        <h5 class="fw-bold">Facebook</h5>
+                        <p class="text-muted mb-0">Message me on Facebook for the quickest response.</p>
+                        <a href="https://www.facebook.com/mikoy.dimaro/" target="_blank" class="btn btn-primary btn-sm mt-2">Message Me</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-card">
+                        <div class="contact-icon">📞</div>
+                        <h5 class="fw-bold">Phone</h5>
+                        <p class="text-muted mb-0">Call or text me directly.</p>
+                        <a href="tel:+639970946623" class="btn btn-success btn-sm mt-2">+63 997 094 6623</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-card">
+                        <div class="contact-icon">🚗</div>
+                        <h5 class="fw-bold">Post Your Car</h5>
+                        <p class="text-muted mb-0">Want to sell? List your car on our website.</p>
+                        <a href="/sell-car" class="btn btn-warning btn-sm mt-2 text-dark">Post Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<footer class="bg-dark text-light pt-5 pb-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h5 class="fw-bold mb-3">Used Cars Philippines</h5>
+                <p class="text-light">Your trusted car agent in Metro Manila and Mindanao. We connect buyers and sellers with transparency and reliability.</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="fw-bold mb-3">Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-light text-decoration-none">Home</a></li>
+                    <li><a href="/browse" class="text-light text-decoration-none">Browse Cars</a></li>
+                    <li><a href="/sell-car" class="text-light text-decoration-none">Sell Your Car</a></li>
+                    <li><a href="/about" class="text-light text-decoration-none">About</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="fw-bold mb-3">Contact Us</h6>
+                <p class="mb-2">
+                    <a href="https://www.facebook.com/mikoy.dimaro/" target="_blank" class="btn btn-sm" style="background-color: #1877F2; border-color: #1877F2; color: white;" rel="noopener noreferrer">
+                        Facebook
+                    </a>
+                </p>
+                <p class="mb-2 text-light">Call: +63 997 094 6623</p>
+                <p class="mb-0 text-light">Email: mikoy.dimaro@gmail.com</p>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <div class="text-center text-light">
+            <small>&copy; 2026 Used Cars Philippines. All rights reserved.</small>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

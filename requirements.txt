@@ -10,3 +10,4 @@ cryptofeed>=2.4.0
 websocket-client
 aiosqlite
 aiohttp
+playwright

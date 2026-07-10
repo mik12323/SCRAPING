@@ -1,0 +1,16 @@
+{
+  "name": "meralco-bill-calculator",
+  "version": "1.0.0",
+  "description": "Meralco Electricity Bill Calculator — Desktop App",
+  "author": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "node build.js",
+    "rebuild": "node build.js --packager"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.0.0",
+    "electron": "^33.0.0"
+  }
+}

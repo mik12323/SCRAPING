@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ year }} {{ name }} {{ car_type if car_type else '' }} for Sale in Philippines - ₱{{ listing.price if listing else 'Contact' }} | Used Cars Philippines</title>
+    
+    <meta name="description" content="Buy this used {{ year }} {{ name }} through Used Cars Philippines. {{ body_type if body_type else '' }} {{ fuel_type if fuel_type else '' }} available in {{ listing.location if listing else 'Metro Manila' }}, Philippines. Contact us today for ₱{{ listing.price if listing else 'price' }}!">
+    <meta name="keywords" content="{{ year }} {{ name }} for sale, used {{ name }} Philippines, second hand {{ name }} Metro Manila, buy {{ year }} {{ name }}, {{ body_type if body_type else 'car' }}, {{ fuel_type if fuel_type else 'car' }}">
+    <meta name="author" content="Used Cars Philippines">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.usedcarsphilippines.com.ph{{ request.path }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+    
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="{{ year }} {{ name }} for Sale | Used Cars Philippines">
+    <meta property="og:description" content="Used {{ year }} {{ name }} available in Metro Manila. Contact Used Cars Philippines for price and details.">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:site_name" content="Used Cars Philippines">
+    <meta property="og:locale" content="en_PH">
+    {% if images %}
+    <meta property="og:image" content="{{ url_for('serve_car_photo', folder=folder, filename=images[0]) }}">
+    {% endif %}
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ year }} {{ name }} for Sale | Used Cars Philippines">
+    <meta name="twitter:description" content="Used {{ year }} {{ name }} available in Metro Manila, Philippines.">
+    {% if images %}
+    <meta name="twitter:image" content="{{ url_for('serve_car_photo', folder=folder, filename=images[0]) }}">
+    {% endif %}
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Car",
+      "name": "{{ year }} {{ brand }} {{ model }}",
+      "model": "{{ model }}",
+      "vehicleIdentificationNumber": "NOT_AVAILABLE",
+      "description": "Used {{ year }} {{ brand }} {{ model }} available for sale through Used Cars Philippines in Metro Manila, Philippines.",
+       "image": "{{ request.url_root.rstrip('/') }}{% if images %}{{ url_for('serve_car_photo', folder=folder, filename=images[0]) }}{% endif %}",
+      "brand": {
+        "@type": "Brand",
+        "name": "{{ brand }}"
+      },
+      "vehicleModelDate": "{{ year }}",
+      "itemCondition": "https://schema.org/UsedCondition",
+      "offers": {
+        "@type": "Offer",
+        "url": "{{ request.url }}",
+        "priceCurrency": "PHP",
+         "price": {% if listing and listing['price'] is not none %}{{ listing['price'] }}{% else %}0{% endif %},
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "Used Cars Philippines",
+          "telephone": "+639970946623"
+        }
+      }
+    }
+    </script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <style>
+        body { background-color: #f8f9fa; padding-bottom: 80px; }
+        .info-box { background: white; padding: 25px; border-radius: 15px; }
+        .breadcrumb-item a { text-decoration: none; }
+        .price-tag { color: #e44d26; font-weight: 800; font-size: 1.75rem; }
+        .sticky-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 12px 16px;
+            z-index: 1000;
+        }
+        .sticky-bottom-bar .price { color: #e44d26; font-weight: 800; font-size: 1.25rem; }
+        @media (min-width: 768px) {
+            body { padding-bottom: 0; }
+            .sticky-bottom-bar { display: none; }
+        }
+        .img-counter { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; z-index: 10; }
+        .carousel-inner { border-radius: 15px; overflow: hidden; height: 600px; }
+        .carousel-item img { width: 100%; height: 600px; object-fit: cover; cursor: zoom-in; }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon { background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 20px; }
+        .carousel-indicators [data-bs-target] { background-color: #e44d26; }
+    </style>
+</head>
+<body>
+    
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
+            <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" height="35" class="me-2">
+            Used Cars Philippines
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/browse">Browse Cars</a></li>
+                <li class="nav-item"><a class="nav-link" href="/sell-car">Sell Your Car</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                {% if session.get('user_id') %}
+                <li class="nav-item"><a class="nav-link" href="/my-cars">My Cars</a></li>
+                {% if session.get('is_admin') %}
+                <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<nav class="container mt-2 mt-md-0" aria-label="breadcrumb">
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ year }} {{ name }}</li>
+    </ol>
+</nav>
+
+<main class="container mt-2 mt-md-3">
+    <a href="/browse" class="btn btn-outline-secondary mb-3">Back</a>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="fs-3 fw-bold mb-2">{{ year }} {{ name }}</h1>
+            <p class="price-tag d-none d-md-block mb-3">
+                {{ display_price }}
+                {% if original_price and listing.price < original_price %}
+                <br><small class="text-muted text-decoration-line-through">was {{ format_display_price(original_price) }}</small>
+                <br><span class="badge bg-danger">PRICE REDUCED</span>
+                {% endif %}
+            </p>
+            
+            {% if images %}
+            {% if images|length > 1 %}
+            <div id="carCarousel" class="carousel slide mb-3" data-bs-ride="false">
+                <div class="position-absolute img-counter" style="z-index: 10;"><span id="imgNum">1</span> / {{ images|length }}</div>
+                
+                <div class="carousel-indicators">
+                    {% for img in images %}
+                    <button type="button" data-bs-target="#carCarousel" data-bs-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}" aria-label="Photo {{ loop.index }}"></button>
+                    {% endfor %}
+                </div>
+                
+                <div class="carousel-inner">
+                    {% for img in images %}
+                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                        <img src="{{ url_for('serve_car_photo', folder=folder, filename=img) }}" 
+                             class="d-block w-100" style="border-radius: 15px; cursor: pointer;"
+                             alt="{{ year }} {{ name }} for sale in Philippines - photo {{ loop.index }}"
+                             onclick="openLightbox({{ loop.index0 }})">
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            {% else %}
+            <div class="mb-3 position-relative">
+                <img src="{{ url_for('serve_car_photo', folder=folder, filename=images[0]) }}" 
+                     class="w-100" style="height: auto; border-radius: 15px; cursor: pointer;"
+                     alt="{{ year }} {{ name }} for sale in Philippines"
+                     onclick="openLightbox(0)">
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="col-md-4">
+            <div class="info-box shadow-sm">
+                <div class="mt-2 mb-3">
+                    <span class="badge bg-secondary fs-6">Used</span>
+                    {% if body_type %}<span class="badge bg-secondary fs-6 ms-1">{{ body_type }}</span>{% endif %}
+                    {% if fuel_type %}<span class="badge bg-info fs-6 ms-1">{{ fuel_type }}</span>{% endif %}
+                    {% if transmission %}<span class="badge bg-dark fs-6 ms-1">{{ transmission }}</span>{% endif %}
+                </div>
+
+                {% if session.get('is_admin') and listing %}
+                <div class="alert alert-info mt-3">
+                    <strong>Posted by:</strong> {{ listing.username }}<br>
+                    <strong>Contact:</strong> {{ listing.owner_phone }}
+                </div>
+                <div class="mt-3 d-flex gap-2">
+                    <a href="/admin/listing/{{ listing.id }}/edit" class="btn btn-outline-primary btn-sm">Edit Listing</a>
+                    <form method="POST" action="/admin/listing/{{ listing.id }}/delete" class="d-inline" onsubmit="return confirm('Delete this listing permanently?');">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete Listing</button>
+                    </form>
+                </div>
+                {% endif %}
+                <hr>
+                <h3 class="h5 text-muted mb-3">Vehicle Details:</h3>
+                <ul class="list-unstyled">
+                    <li><strong>Year:</strong> {{ year }}</li>
+                    <li><strong>Make/Model:</strong> {{ name }}</li>
+                    {% if body_type %}<li><strong>Body Type:</strong> {{ body_type }}</li>{% endif %}
+                    {% if fuel_type %}<li><strong>Fuel Type:</strong> {{ fuel_type }}</li>{% endif %}
+                    {% if transmission %}<li><strong>Transmission:</strong> {{ transmission }}</li>{% endif %}
+                </ul>
+                <pre style="white-space: pre-wrap; font-family: sans-serif;">{{ description }}</pre>
+                
+                <div class="d-grid gap-2 mt-4 d-none d-md-flex">
+                    <a href="https://www.facebook.com/mikoy.dimaro/" target="_blank" class="btn btn-primary btn-lg" rel="noopener noreferrer">
+                        Inquire via Messenger
+                    </a>
+                    <a href="tel:+639970946623" class="btn btn-success btn-lg">
+                        Call: +63 997 094 6623
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+    <div class="sticky-bottom-bar d-md-none">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <div class="price">{{ display_price }}</div>
+                {% if original_price and listing.price < original_price %}
+                <small class="text-danger" style="font-size: 0.7em;">PRICE REDUCED</small><br>
+                {% endif %}
+                <small class="text-muted">{{ year }} {{ name }}</small>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="tel:+639970946623" class="btn btn-success">Call</a>
+                <a href="https://www.facebook.com/mikoy.dimaro/" target="_blank" class="btn btn-primary" rel="noopener noreferrer">Message</a>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Update carousel counter when slide changes
+document.addEventListener('DOMContentLoaded', function() {
+    const carouselElement = document.getElementById('carCarousel');
+    if (carouselElement) {
+        carouselElement.addEventListener('slid.bs.carousel', function(event) {
+            // Use event.relatedTarget to get the NEW active item
+            const newIndex = Array.from(carouselElement.querySelectorAll('.carousel-item')).indexOf(event.relatedTarget);
+            const counterElement = document.getElementById('imgNum');
+            if (counterElement && newIndex >= 0) {
+                counterElement.textContent = newIndex + 1;
+            }
+        });
+    }
+});
+
+// Simple lightbox function (global scope)
+let currentImageIndex = 0;
+const images = [
+    {% for img in images %}
+    "{{ url_for('serve_car_photo', folder=folder, filename=img) }}"{% if not loop.last %},{% endif %}
+    {% endfor %}
+];
+
+function openLightbox(index) {
+    currentImageIndex = index;
+    const modalElement = document.getElementById('lightboxModal');
+    const modalImg = document.getElementById('lightboxImage');
+    modalImg.src = images[index];
+    document.getElementById('lightboxCounter').textContent = index + 1;
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+}
+
+function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    document.getElementById('lightboxImage').src = images[currentImageIndex];
+    document.getElementById('lightboxCounter').textContent = currentImageIndex + 1;
+}
+
+function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    document.getElementById('lightboxImage').src = images[currentImageIndex];
+    document.getElementById('lightboxCounter').textContent = currentImageIndex + 1;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+    const modalElement = document.getElementById('lightboxModal');
+    if (modalElement && modalElement.classList.contains('show')) {
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+        if (e.key === 'Escape') {
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) modal.hide();
+        }
+    }
+});
+</script>
+
+<!-- Lightbox Modal -->
+<div class="modal fade" id="lightboxModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark">
+            <div class="modal-body text-center position-relative p-0">
+                <button type="button" class="btn btn-light position-absolute top-50 start-0 translate-middle-y m-2" onclick="prevImage()" style="z-index: 1050;">❮</button>
+                <img id="lightboxImage" src="" class="img-fluid rounded" style="max-height: 90vh; object-fit: contain;">
+                <button type="button" class="btn btn-light position-absolute top-50 end-0 translate-middle-y m-2" onclick="nextImage()" style="z-index: 1050;">❯</button>
+                <div class="position-absolute top-0 start-50 translate-middle-x bg-dark text-light px-3 py-1 rounded-bottom" style="z-index: 1050;">
+                    <span id="lightboxCounter">1</span> / {{ images|length }}
+                </div>
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" style="z-index: 1050;"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="bg-dark text-light pt-5 pb-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h5 class="fw-bold mb-3">Used Cars Philippines</h5>
+                <p class="text-light">Your trusted car agent in Metro Manila and Mindanao. We connect buyers and sellers with transparency and reliability.</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="fw-bold mb-3">Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-light text-decoration-none">Home</a></li>
+                    <li><a href="/browse" class="text-light text-decoration-none">Browse Cars</a></li>
+                    <li><a href="/sell-car" class="text-light text-decoration-none">Sell Your Car</a></li>
+                    <li><a href="/about" class="text-light text-decoration-none">About</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="fw-bold mb-3">Contact Us</h6>
+                <p class="mb-2">
+                    <a href="https://www.facebook.com/mikoy.dimaro/" target="_blank" class="btn btn-sm" style="background-color: #1877F2; border-color: #1877F2; color: white;" rel="noopener noreferrer">
+                        Facebook
+                    </a>
+                </p>
+                <p class="mb-2 text-light">Call: +63 997 094 6623</p>
+                <p class="mb-0 text-light">Email: mikoy.dimaro@gmail.com</p>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <div class="text-center text-light">
+            <small>&copy; 2026 Used Cars Philippines. All rights reserved.</small>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

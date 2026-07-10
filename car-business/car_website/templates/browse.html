@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Cars - Used Cars Philippines</title>
+    
+    <meta name="description" content="Browse our inventory of quality pre-owned cars for sale in the Philippines. Filter by brand, model, price, body type, fuel type, transmission. Cash cars available.">
+    <meta name="keywords" content="browse used cars Philippines, car listings Manila, second hand cars for sale, buy used car Philippines">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.usedcarsphilippines.com.ph{{ request.path }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Browse Cars - Used Cars Philippines">
+    <meta property="og:description" content="Browse our inventory of quality pre-owned cars for sale in the Philippines. Filter by brand, model, price, body type, fuel type. Cash cars available.">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:site_name" content="Used Cars Philippines">
+    <meta property="og:locale" content="en_PH">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Used Cars Philippines",
+      "url": "https://www.usedcarsphilippines.com.ph/",
+      "logo": "https://www.usedcarsphilippines.com.ph/static/favicon.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+639970946623",
+        "contactType": "sales",
+        "areaServed": "PH"
+      }
+    }
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f7f6; }
+        .car-card {
+            transition: transform 0.2s;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .car-card:hover { transform: translateY(-5px); }
+        .car-img { height: 220px; object-fit: cover; }
+        .price-text { color: #e44d26; font-weight: 800; font-size: 1.25rem; }
+        .search-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .pagination .page-link { color: #1a1a2e; }
+        .pagination .page-item.active .page-link { background-color: #e44d26; border-color: #e44d26; }
+        .pagination .page-link:hover { color: #e44d26; }
+        .autocomplete-wrapper { position: relative; }
+        .autocomplete-dropdown {
+            position: absolute; top: 100%; left: 0; right: 0;
+            background: white; border: 1px solid #dee2e6; border-top: none;
+            border-radius: 0 0 8px 8px; max-height: 200px; overflow-y: auto;
+            z-index: 1000; display: none;
+        }
+        .autocomplete-dropdown.show { display: block; }
+        .autocomplete-item {
+            padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #f0f0f0;
+        }
+        .autocomplete-item:hover { background-color: #f8f9fa; }
+        .autocomplete-item:last-child { border-bottom: none; }
+        .autocomplete-item.active { background-color: #e7f1ff; }
+        .faq-section .accordion-button:not(.collapsed) {
+            background-color: #e7f1ff;
+            color: #0c63e4;
+        }
+        .faq-section .accordion-item {
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
+            <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" height="35" class="me-2">
+            Used Cars Philippines
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/browse">Browse Cars</a></li>
+                <li class="nav-item"><a class="nav-link" href="/sell-car">Sell Your Car</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                {% if session.get('user_id') %}
+                <li class="nav-item"><a class="nav-link" href="/my-cars">My Cars</a></li>
+                {% if session.get('is_admin') %}
+                <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout ({{ session.get('username') }})</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+
+    <form class="search-section" aria-label="Search and Filter" method="GET" action="/browse">
+    <h2 class="fw-bold mb-3">Browse Our Cars</h2>
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label fw-bold" for="makeInput">Brand</label>
+                <div class="autocomplete-wrapper">
+                    <input type="text" id="makeInput" name="make" class="form-control" placeholder="e.g. Toy..." value="{{ request.args.get('make', '') }}" aria-label="Search by car brand" autocomplete="off">
+                    <div class="autocomplete-dropdown" id="makeDropdown"></div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label fw-bold" for="modelFilter">Model</label>
+                <input type="text" id="modelFilter" name="model" class="form-control"
+                       placeholder="e.g. Civic..." value="{{ request.args.get('model', '') }}"
+                       aria-label="Search by car model">
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label fw-bold" for="bodyTypeFilter">Body Type</label>
+                <select id="bodyTypeFilter" name="body_type" class="form-select" aria-label="Filter by body type">
+                    <option value="All">All Body Types</option>
+                    {% for bt in body_types %}
+                    <option value="{{ bt }}" {% if request.args.get('body_type') == bt %}selected{% endif %}>{{ bt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label fw-bold" for="fuelTypeFilter">Fuel Type</label>
+                <select id="fuelTypeFilter" name="fuel_type" class="form-select" aria-label="Filter by fuel type">
+                    <option value="All">All Fuel Types</option>
+                    {% for ft in fuel_types %}
+                    <option value="{{ ft }}" {% if request.args.get('fuel_type') == ft %}selected{% endif %}>{{ ft }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label fw-bold" for="transmissionFilter">Transmission</label>
+                <select id="transmissionFilter" name="transmission" class="form-select" aria-label="Filter by transmission">
+                    <option value="All">All Transmissions</option>
+                    {% for t in transmissions %}
+                    <option value="{{ t }}" {% if request.args.get('transmission') == t %}selected{% endif %}>{{ t }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label fw-bold" for="priceMin">Min Price</label>
+                <select id="priceMin" name="price_min" class="form-select" aria-label="Minimum price">
+                    <option value="">No Min</option>
+                    <option value="0" {% if request.args.get('price_min') == '0' %}selected{% endif %}>₱0</option>
+                    <option value="100000" {% if request.args.get('price_min') == '100000' %}selected{% endif %}>₱100k</option>
+                    <option value="200000" {% if request.args.get('price_min') == '200000' %}selected{% endif %}>₱200k</option>
+                    <option value="300000" {% if request.args.get('price_min') == '300000' %}selected{% endif %}>₱300k</option>
+                    <option value="400000" {% if request.args.get('price_min') == '400000' %}selected{% endif %}>₱400k</option>
+                    <option value="500000" {% if request.args.get('price_min') == '500000' %}selected{% endif %}>₱500k</option>
+                    <option value="600000" {% if request.args.get('price_min') == '600000' %}selected{% endif %}>₱600k</option>
+                    <option value="700000" {% if request.args.get('price_min') == '700000' %}selected{% endif %}>₱700k</option>
+                    <option value="800000" {% if request.args.get('price_min') == '800000' %}selected{% endif %}>₱800k</option>
+                    <option value="900000" {% if request.args.get('price_min') == '900000' %}selected{% endif %}>₱900k</option>
+                    <option value="1000000" {% if request.args.get('price_min') == '1000000' %}selected{% endif %}>₱1M</option>
+                    <option value="2000000" {% if request.args.get('price_min') == '2000000' %}selected{% endif %}>₱2M</option>
+                    <option value="3000000" {% if request.args.get('price_min') == '3000000' %}selected{% endif %}>₱3M</option>
+                    <option value="4000000" {% if request.args.get('price_min') == '4000000' %}selected{% endif %}>₱4M</option>
+                    <option value="5000000" {% if request.args.get('price_min') == '5000000' %}selected{% endif %}>₱5M</option>
+                    <option value="6000000" {% if request.args.get('price_min') == '6000000' %}selected{% endif %}>₱6M</option>
+                    <option value="7000000" {% if request.args.get('price_min') == '7000000' %}selected{% endif %}>₱7M</option>
+                    <option value="8000000" {% if request.args.get('price_min') == '8000000' %}selected{% endif %}>₱8M</option>
+                    <option value="9000000" {% if request.args.get('price_min') == '9000000' %}selected{% endif %}>₱9M</option>
+                    <option value="10000000" {% if request.args.get('price_min') == '10000000' %}selected{% endif %}>₱10M</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label fw-bold" for="priceMax">Max Price</label>
+                <select id="priceMax" name="price_max" class="form-select" aria-label="Maximum price">
+                    <option value="">No Max</option>
+                    <option value="100000" {% if request.args.get('price_max') == '100000' %}selected{% endif %}>₱100k</option>
+                    <option value="200000" {% if request.args.get('price_max') == '200000' %}selected{% endif %}>₱200k</option>
+                    <option value="300000" {% if request.args.get('price_max') == '300000' %}selected{% endif %}>₱300k</option>
+                    <option value="400000" {% if request.args.get('price_max') == '400000' %}selected{% endif %}>₱400k</option>
+                    <option value="500000" {% if request.args.get('price_max') == '500000' %}selected{% endif %}>₱500k</option>
+                    <option value="600000" {% if request.args.get('price_max') == '600000' %}selected{% endif %}>₱600k</option>
+                    <option value="700000" {% if request.args.get('price_max') == '700000' %}selected{% endif %}>₱700k</option>
+                    <option value="800000" {% if request.args.get('price_max') == '800000' %}selected{% endif %}>₱800k</option>
+                    <option value="900000" {% if request.args.get('price_max') == '900000' %}selected{% endif %}>₱900k</option>
+                    <option value="1000000" {% if request.args.get('price_max') == '1000000' %}selected{% endif %}>₱1M</option>
+                    <option value="2000000" {% if request.args.get('price_max') == '2000000' %}selected{% endif %}>₱2M</option>
+                    <option value="3000000" {% if request.args.get('price_max') == '3000000' %}selected{% endif %}>₱3M</option>
+                    <option value="4000000" {% if request.args.get('price_max') == '4000000' %}selected{% endif %}>₱4M</option>
+                    <option value="5000000" {% if request.args.get('price_max') == '5000000' %}selected{% endif %}>₱5M</option>
+                    <option value="6000000" {% if request.args.get('price_max') == '6000000' %}selected{% endif %}>₱6M</option>
+                    <option value="7000000" {% if request.args.get('price_max') == '7000000' %}selected{% endif %}>₱7M</option>
+                    <option value="8000000" {% if request.args.get('price_max') == '8000000' %}selected{% endif %}>₱8M</option>
+                    <option value="9000000" {% if request.args.get('price_max') == '9000000' %}selected{% endif %}>₱9M</option>
+                    <option value="10000000" {% if request.args.get('price_max') == '10000000' %}selected{% endif %}>₱10M</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label fw-bold" for="sortFilter">Sort By</label>
+                <select id="sortFilter" name="sort" class="form-select" aria-label="Sort results">
+                    <option value="alphabetical" {% if sort_by == 'alphabetical' %}selected{% endif %}>A-Z (Alphabetical)</option>
+                    <option value="reverse_alphabetical" {% if sort_by == 'reverse_alphabetical' %}selected{% endif %}>Z-A (Reverse Alphabetical)</option>
+                    <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Year: Newest First</option>
+                    <option value="oldest" {% if sort_by == 'oldest' %}selected{% endif %}>Year: Oldest First</option>
+                    <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                    <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                </select>
+            </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-warning fw-bold text-dark px-4 w-100">Search</button>
+            </div>
+            {% set has_filters = (
+                request.args.get('make') or 
+                request.args.get('model') or 
+                request.args.get('body_type', 'All') != 'All' or 
+                request.args.get('fuel_type', 'All') != 'All' or 
+                request.args.get('transmission', 'All') != 'All' or 
+                request.args.get('price_min') or 
+                request.args.get('price_max') or
+                request.args.get('sort', 'price_low') != 'price_low'
+            ) %}
+            {% if has_filters %}
+            <div class="col-md-2 d-flex align-items-end">
+                <a href="/browse" class="btn btn-outline-secondary w-100">Reset Filter</a>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if trending_cars %}
+        <div class="mt-3">
+            <small class="text-muted fw-bold">Trending Today:</small>
+            <div class="d-flex flex-wrap gap-2 mt-1">
+                {% for car in trending_cars %}
+                <a href="javascript:void(0)"
+                   class="badge bg-warning text-dark text-decoration-none trending-badge"
+                   data-brand="{{ car.brand }}"
+                   data-model="{{ car.model }}"
+                   data-body-type="{{ car.body_type }}"
+                   data-fuel-type="{{ car.fuel_type }}"
+                   data-transmission="{{ car.transmission }}"
+                   style="cursor: pointer; font-size: 0.85rem; padding: 6px 12px;">
+                    {{ car.display_name }} ({{ car.clicks }} clicks)
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% include 'car_grid.html' %}
+    </div>
+
+    {% if not cars %}
+    <section class="row mt-4">
+        <div class="col-12 py-5">
+            <div class="p-5 bg-white rounded shadow-sm">
+                <div class="text-center">
+                    <h2 class="display-1">No cars found</h2>
+                    <h3 class="fw-bold">We couldn't find any matches</h3>
+                    <p class="text-muted">Try adjusting your filters or browse our recommendations below.</p>
+                    <div class="d-flex justify-content-center gap-3 mt-4">
+                        <a href="/browse" class="btn btn-primary px-4 rounded-pill">Reset Filters</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% if recommended_cars %}
+    <section class="mt-5">
+        <h3 class="fw-bold mb-4 text-center">Recommended Cars for You</h3>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for car in recommended_cars %}
+            <div class="col">
+                <div class="card car-card h-100 shadow-sm">
+                    <a href="/car/{{ car.slug }}" class="text-decoration-none text-dark">
+                        {% if car.thumbnail %}
+                        <img src="/photos/{{ car.folder }}/{{ car.thumbnail }}" class="card-img-top car-img" alt="{{ car.name }}">
+                        {% else %}
+                        <div class="card-img-top car-img d-flex align-items-center justify-content-center bg-light text-muted">No Image</div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ car.name }}</h5>
+                            <p class="card-text price-text mb-1">{{ car.display_price }}</p>
+                            <small class="text-muted">{{ car.year }} • {{ car.type }}</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    {% endif %}
+
+    {% if total_pages > 1 %}
+    <nav class="d-flex justify-content-center mt-4" aria-label="Pagination">
+        <ul class="pagination">
+            {% if page > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="/browse?page={{ page - 1 }}&make={{ request.args.get('make', '') }}&model={{ request.args.get('model', '') }}&type={{ request.args.get('type', 'All') }}&body_type={{ request.args.get('body_type', 'All') }}&fuel_type={{ request.args.get('fuel_type', 'All') }}&transmission={{ request.args.get('transmission', 'All') }}&price_min={{ request.args.get('price_min', '') }}&price_max={{ request.args.get('price_max', '') }}&sort={{ sort_by }}">&laquo; Prev</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">&laquo; Prev</span></li>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+            <li class="page-item {% if p == page %}active{% endif %}">
+                <a class="page-link" href="/browse?page={{ p }}&make={{ request.args.get('make', '') }}&model={{ request.args.get('model', '') }}&type={{ request.args.get('type', 'All') }}&body_type={{ request.args.get('body_type', 'All') }}&fuel_type={{ request.args.get('fuel_type', 'All') }}&transmission={{ request.args.get('transmission', 'All') }}&price_min={{ request.args.get('price_min', '') }}&price_max={{ request.args.get('price_max', '') }}&sort={{ sort_by }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page < total_pages %}
+            <li class="page-item">
+                <a class="page-link" href="/browse?page={{ page + 1 }}&make={{ request.args.get('make', '') }}&model={{ request.args.get('model', '') }}&type={{ request.args.get('type', 'All') }}&body_type={{ request.args.get('body_type', 'All') }}&fuel_type={{ request.args.get('fuel_type', 'All') }}&transmission={{ request.args.get('transmission', 'All') }}&price_min={{ request.args.get('price_min', '') }}&price_max={{ request.args.get('price_max', '') }}&sort={{ sort_by }}">Next &raquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">Next &raquo;</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <p class="text-center text-muted mb-5">Showing {{ ((page - 1) * 15) + 1 }}-{{ [page * 15, total] | min }} of {{ total }} cars</p>
+    {% endif %}
+
+    <section class="faq-section mt-5 mb-5">
+        <h2 class="text-center fw-bold mb-4">Frequently Asked Questions</h2>
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                        How does Used Cars Philippines work?
+                    </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">We act as an agent connecting car owners with potential buyers. You browse our listings, contact us about a car you're interested in, and we handle the coordination and negotiation between you and the owner. We earn a commission only when a deal is successfully closed.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                        What payment methods do you accept for commission?
+                    </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">Our commission can be paid via GCash, Bank Transfer, or Cash. You choose whichever method is most convenient for you. The commission is only paid after a successful deal.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                        Will you be physically present during the deal?
+                    </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">Yes, I can be physically present at the deal if you prefer. However, if distance is an issue, I can also coordinate remotely and you can trust the owner directly for the transaction. Either way, I'll make sure everything is clear before the deal happens.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                        How do I sell my car through your website?
+                    </button>
+                </h2>
+                <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">Simply go to our <a href="/sell-car">Sell Your Car</a> page, fill in the details of your vehicle (brand, model, year, price, photos, etc.), and submit. Your listing will appear on our website immediately. Once a buyer is found, I'll coordinate the deal and earn a small commission upon successful sale.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                        What areas do you cover?
+                    </button>
+                </h2>
+                <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">We currently cover deals across Metro Manila and can also coordinate transactions in Mindanao. If you're in another area, feel free to reach out and we'll see what we can do.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const makeInput = document.getElementById('makeInput');
+    const makeDropdown = document.getElementById('makeDropdown');
+    const allBrands = {{ all_brands | tojson }};
+    
+    let activeIndex = -1;
+    
+    function filterBrands(query) {
+        if (!query) return [];
+        query = query.toLowerCase();
+        return allBrands.filter(brand => brand.toLowerCase().includes(query));
+    }
+    
+    function showDropdown(filteredBrands) {
+        if (filteredBrands.length === 0) {
+            makeDropdown.classList.remove('show');
+            return;
+        }
+        
+        makeDropdown.innerHTML = '';
+        filteredBrands.forEach((brand, index) => {
+            const item = document.createElement('div');
+            item.className = 'autocomplete-item';
+            item.textContent = brand;
+            item.dataset.index = index;
+            
+            item.addEventListener('click', function() {
+                makeInput.value = brand;
+                makeDropdown.classList.remove('show');
+            });
+            
+            makeDropdown.appendChild(item);
+        });
+        
+        makeDropdown.classList.add('show');
+        activeIndex = -1;
+    }
+    
+    makeInput.addEventListener('input', function() {
+        const query = this.value.trim();
+        const filtered = filterBrands(query);
+        showDropdown(filtered);
+    });
+    
+    makeInput.addEventListener('keydown', function(e) {
+        const items = makeDropdown.querySelectorAll('.autocomplete-item');
+        
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            activeIndex = Math.min(activeIndex + 1, items.length - 1);
+            updateActiveItem(items);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            activeIndex = Math.max(activeIndex - 1, 0);
+            updateActiveItem(items);
+        } else if (e.key === 'Enter' && activeIndex >= 0) {
+            e.preventDefault();
+            items[activeIndex].click();
+        } else if (e.key === 'Escape') {
+            makeDropdown.classList.remove('show');
+        }
+    });
+    
+    function updateActiveItem(items) {
+        items.forEach((item, index) => {
+            item.classList.toggle('active', index === activeIndex);
+        });
+        if (activeIndex >= 0) {
+            items[activeIndex].scrollIntoView({ block: 'nearest' });
+        }
+    }
+    
+    document.addEventListener('click', function(e) {
+        if (!makeInput.contains(e.target) && !makeDropdown.contains(e.target)) {
+            makeDropdown.classList.remove('show');
+        }
+    });
+
+    // Handle trending car clicks
+    document.querySelectorAll('.trending-badge').forEach(badge => {
+        badge.addEventListener('click', function() {
+            document.getElementById('makeInput').value = this.dataset.brand;
+            document.getElementById('modelFilter').value = this.dataset.model;
+            if (this.dataset.bodyType) {
+                document.getElementById('bodyTypeFilter').value = this.dataset.bodyType;
+            }
+            if (this.dataset.fuelType) {
+                document.getElementById('fuelTypeFilter').value = this.dataset.fuelType;
+            }
+            if (this.dataset.transmission) {
+                document.getElementById('transmissionFilter').value = this.dataset.transmission;
+            }
+            this.closest('form').submit();
+        });
+    });
+});
+</script>
+<footer class="bg-dark text-light pt-5 pb-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h5 class="fw-bold mb-3">Used Cars Philippines</h5>
+                <p class="text-light">Your trusted car agent in Metro Manila and Mindanao. We connect buyers and sellers with transparency and reliability.</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="fw-bold mb-3">Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-light text-decoration-none">Home</a></li>
+                    <li><a href="/browse" class="text-light text-decoration-none">Browse Cars</a></li>
+                    <li><a href="/sell-car" class="text-light text-decoration-none">Sell Your Car</a></li>
+                    <li><a href="/about" class="text-light text-decoration-none">About</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="fw-bold mb-3">Contact Us</h6>
+                <p class="mb-2">
+                    <a href="https://www.facebook.com/mikoy.dimaro/" target="_blank" class="btn btn-sm" style="background-color: #1877F2; border-color: #1877F2; color: white;" rel="noopener noreferrer">
+                        Facebook
+                    </a>
+                </p>
+                <p class="mb-2 text-light">Call: +63 997 094 6623</p>
+                <p class="mb-0 text-light">Email: mikoy.dimaro@gmail.com</p>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <div class="text-center text-light">
+            <small>&copy; 2026 Used Cars Philippines. All rights reserved.</small>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

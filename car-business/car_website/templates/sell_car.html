@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Your Car for Sale | Used Cars Philippines</title>
+    
+    <meta name="description" content="Sell your used car fast! Post your vehicle on Used Cars Philippines for free. Reach thousands of buyers in Metro Manila and Mindanao.">
+    <meta name="keywords" content="sell my car Philippines, list used car Manila, post car for sale Philippines, sell second hand car, Used Cars Philippines">
+    <meta name="author" content="Used Cars Philippines">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.usedcarsphilippines.com.ph{{ request.path }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Post Your Car for Sale | Used Cars Philippines">
+    <meta property="og:description" content="Sell your used car fast. List your vehicle and reach thousands of buyers in Metro Manila and Mindanao.">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:site_name" content="Used Cars Philippines">
+    <meta property="og:locale" content="en_PH">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Used Cars Philippines",
+      "url": "https://www.usedcarsphilippines.com.ph/",
+      "logo": "https://www.usedcarsphilippines.com.ph/static/favicon.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+639970946623",
+        "contactType": "sales",
+        "areaServed": "PH"
+      }
+    }
+    </script>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Post Your Car for Sale | Used Cars Philippines">
+    <meta name="twitter:description" content="Sell your used car fast. List your vehicle and reach thousands of buyers in Metro Manila and Mindanao.">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f7f6; }
+        .form-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .contact-help {
+            background: linear-gradient(135deg, #e7f1ff 0%, #f0f4ff 100%);
+            border: 2px solid #0d6efd;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .preview-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .preview-grid img { width: 100px; height: 80px; object-fit: cover; border-radius: 8px; }
+        .preview-grid .remove-btn {
+            position: absolute; top: -5px; right: -5px;
+            background: #e44d26; color: white; border: none;
+            border-radius: 50%; width: 22px; height: 22px;
+            font-size: 12px; cursor: pointer; line-height: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
+            <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" height="35" class="me-2">
+            Used Cars Philippines
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/browse">Browse Cars</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/sell-car">Sell Your Car</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                {% if session.get('user_id') %}
+                <li class="nav-item"><a class="nav-link" href="/my-cars">My Cars</a></li>
+                {% if session.get('is_admin') %}
+                <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container mb-5">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Post Your Car</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="contact-help text-center">
+                <h3 class="fw-bold mb-2">Don't know how to post your car?</h3>
+                <p class="text-muted mb-3">No problem! Contact us directly and we'll list it for you.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="https://www.facebook.com/mikoy.dimaro/" target="_blank" class="btn btn-primary" rel="noopener noreferrer">
+                        Message on Facebook
+                    </a>
+                    <a href="tel:+639970946623" class="btn btn-success">
+                        Call: +63 997 094 6623
+                    </a>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="fw-bold mb-2">Post Your Car for Sale</h2>
+                <p class="text-muted mb-4">Fill in the details of your vehicle. Your listing will be reviewed and approved before going live. We earn a small commission only when your car is successfully sold.</p>
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                
+                <form action="/sell-car" method="POST" enctype="multipart/form-data" id="carForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" for="brand">Brand <span class="text-danger">*</span></label>
+                            <select class="form-select" id="brand" name="brand" required>
+                                <option value="">Select Brand...</option>
+                                {% for b in brands %}
+                                <option value="{{ b }}">{{ b }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" for="model">Model <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="model" name="model" placeholder="e.g. Camry" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="year">Year <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="year" name="year" placeholder="e.g. 2020" min="1900" max="2026" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="price">Selling Price (₱) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="e.g. 1,500,000" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="car_type">Payment Type <span class="text-danger">*</span></label>
+                            <select class="form-select" id="car_type" name="car_type" required>
+                                <option value="Cash">Cash</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="body_type">Body Type</label>
+                            <select class="form-select" id="body_type" name="body_type">
+                                <option value="">Select Body Type...</option>
+                                {% for bt in body_types %}
+                                <option value="{{ bt }}">{{ bt }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="fuel_type">Fuel Type</label>
+                            <select class="form-select" id="fuel_type" name="fuel_type">
+                                <option value="">Select Fuel Type...</option>
+                                {% for ft in fuel_types %}
+                                <option value="{{ ft }}">{{ ft }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="transmission">Transmission</label>
+                            <select class="form-select" id="transmission" name="transmission">
+                                <option value="">Select Transmission...</option>
+                                {% for t in transmissions %}
+                                <option value="{{ t }}">{{ t }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="contact">Contact Number <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" id="contact" name="contact" placeholder="e.g. +639123456789" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="location">Location <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="location" name="location" placeholder="e.g. Quezon City, Metro Manila" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold" for="description">Description / Vehicle Details</label>
+                            <textarea class="form-control" id="description" name="description" rows="5" placeholder="Mileage, transmission, engine type, condition, features, etc."></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold" for="photos">Photos <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control" id="photos" name="photos" multiple accept="image/*" required>
+                            <small class="text-muted">Upload at least 1 photo. Multiple photos recommended. (JPG, PNG)</small>
+                            <div class="preview-grid" id="previewGrid"></div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="agree" required>
+                                <label class="form-check-label" for="agree">
+                                    I agree to a commission fee upon successful sale of my vehicle.
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">Submit Listing for Review</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    const priceInput = document.getElementById('price');
+    priceInput.addEventListener('input', function(e) {
+        let value = this.value.replace(/[^0-9]/g, '');
+        if (value) {
+            this.value = parseInt(value).toLocaleString('en-US');
+        }
+    });
+
+    const photosInput = document.getElementById('photos');
+    const previewGrid = document.getElementById('previewGrid');
+    let selectedFiles = [];
+
+    photosInput.addEventListener('change', function() {
+        previewGrid.innerHTML = '';
+        selectedFiles = Array.from(this.files);
+        selectedFiles.forEach((file, index) => {
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'relative';
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.type = 'button';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = function() {
+                selectedFiles.splice(index, 1);
+                updatePreview();
+            };
+            wrapper.appendChild(img);
+            wrapper.appendChild(removeBtn);
+            previewGrid.appendChild(wrapper);
+        });
+    });
+
+    function updatePreview() {
+        previewGrid.innerHTML = '';
+        selectedFiles.forEach((file) => {
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'relative';
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            wrapper.appendChild(img);
+            previewGrid.appendChild(wrapper);
+        });
+        const dt = new DataTransfer();
+        selectedFiles.forEach(f => dt.items.add(f));
+        photosInput.files = dt.files;
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<footer class="bg-dark text-light pt-5 pb-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h5 class="fw-bold mb-3">Used Cars Philippines</h5>
+                <p class="text-light">Your trusted car agent in Metro Manila and Mindanao. We connect buyers and sellers with transparency and reliability.</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="fw-bold mb-3">Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-light text-decoration-none">Home</a></li>
+                    <li><a href="/browse" class="text-light text-decoration-none">Browse Cars</a></li>
+                    <li><a href="/sell-car" class="text-light text-decoration-none">Sell Your Car</a></li>
+                    <li><a href="/about" class="text-light text-decoration-none">About</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="fw-bold mb-3">Contact Us</h6>
+                <p class="mb-2">
+                    <a href="https://www.facebook.com/mikoy.dimaro/" target="_blank" class="btn btn-sm" style="background-color: #1877F2; border-color: #1877F2; color: white;" rel="noopener noreferrer">
+                        Facebook
+                    </a>
+                </p>
+                <p class="mb-2 text-light">Call: +63 997 094 6623</p>
+                <p class="mb-0 text-light">Email: mikoy.dimaro@gmail.com</p>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <div class="text-center text-light">
+            <small>&copy; 2026 Used Cars Philippines. All rights reserved.</small>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

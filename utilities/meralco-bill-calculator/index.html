@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meralco Bill Calculator</title>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 32px 28px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .header-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #3b82f6, #60a5fa);
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    }
+
+    .header-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: white;
+    }
+
+    .header h1 {
+      color: #f1f5f9;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .header p {
+      color: #64748b;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #f1f5f9;
+      font-size: 16px;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-group input::placeholder {
+      color: #475569;
+      font-weight: 400;
+    }
+
+    .form-group input:focus {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.08);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    .form-group input::-webkit-outer-spin-button,
+    .form-group input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .form-group input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    .rate-note {
+      color: #475569;
+      font-size: 11px;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .btn-calculate {
+      width: 100%;
+      padding: 14px;
+      margin-top: 6px;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-calculate:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45);
+      background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    }
+
+    .btn-calculate:active {
+      transform: translateY(0);
+    }
+
+    .error-text {
+      color: #f87171;
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 12px;
+      text-align: center;
+      min-height: 20px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .error-text.visible {
+      opacity: 1;
+    }
+
+    .result-card {
+      margin-top: 24px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.06));
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 16px;
+      padding: 24px 20px;
+      display: none;
+    }
+
+    .result-card.visible {
+      display: block;
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+    }
+
+    .result-item:first-child {
+      padding-top: 0;
+    }
+
+    .result-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .result-item + .result-item {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .result-item .label {
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .result-item .value {
+      color: #f1f5f9;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .result-item .value.amount {
+      color: #60a5fa;
+      font-size: 20px;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+      margin: 6px 0;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 18px;
+      color: #334155;
+      font-size: 11px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+
+      .app-container {
+        padding: 24px 18px;
+      }
+
+      .header h1 {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="header-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-4-4 1.41-1.41L11 14.17l6.59-6.59L19 9l-8 8z"/>
+        </svg>
+      </div>
+      <h1>Meralco Bill Calculator</h1>
+      <p>Estimate your electricity bill instantly</p>
+    </div>
+
+    <div class="form-group">
+      <label for="prev-reading">Previous Meter Reading (kWh)</label>
+      <input type="number" id="prev-reading" placeholder="e.g. 12500" step="any" min="0">
+    </div>
+
+    <div class="form-group">
+      <label for="curr-reading">Current Meter Reading (kWh)</label>
+      <input type="number" id="curr-reading" placeholder="e.g. 12950" step="any" min="0">
+    </div>
+
+    <div class="form-group">
+      <label for="rate">Current Meralco Rate per kWh (Php)</label>
+      <input type="number" id="rate" value="14.3345" step="0.0001" min="0">
+      <div class="rate-note">Default rate: Php 14.3345 / kWh</div>
+    </div>
+
+    <button class="btn-calculate" id="calculate-btn">Calculate Bill</button>
+
+    <div class="error-text" id="error-text"></div>
+
+    <div class="result-card" id="result-card">
+      <div class="result-item">
+        <span class="label">Total Consumption</span>
+        <span class="value" id="consumption-value">0 kWh</span>
+      </div>
+      <div class="result-item">
+        <span class="label">Estimated Bill Amount</span>
+        <span class="value amount" id="bill-value">Php 0.00</span>
+      </div>
+    </div>
+
+    <div class="footer-note">For estimation purposes only. Actual bill may vary.</div>
+  </div>
+
+  <script>
+    const prevInput = document.getElementById('prev-reading');
+    const currInput = document.getElementById('curr-reading');
+    const rateInput = document.getElementById('rate');
+    const calcBtn = document.getElementById('calculate-btn');
+    const errorText = document.getElementById('error-text');
+    const resultCard = document.getElementById('result-card');
+    const consumptionValue = document.getElementById('consumption-value');
+    const billValue = document.getElementById('bill-value');
+
+    const savedPrevReading = localStorage.getItem('prevReading');
+    if (savedPrevReading) {
+      prevInput.value = savedPrevReading;
+    }
+
+    function formatCurrency(amount) {
+      return 'Php ' + amount.toLocaleString('en-PH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    }
+
+    function validateAndCalculate() {
+      const prev = prevInput.value.trim();
+      const curr = currInput.value.trim();
+      const rate = rateInput.value.trim();
+
+      if (!prev || !curr || !rate) {
+        errorText.textContent = 'All fields are required.';
+        errorText.classList.add('visible');
+        resultCard.classList.remove('visible');
+        return;
+      }
+
+      const prevNum = parseFloat(prev);
+      const currNum = parseFloat(curr);
+      const rateNum = parseFloat(rate);
+
+      if (isNaN(prevNum) || isNaN(currNum) || isNaN(rateNum)) {
+        errorText.textContent = 'Please enter valid numbers.';
+        errorText.classList.add('visible');
+        resultCard.classList.remove('visible');
+        return;
+      }
+
+      if (currNum < prevNum) {
+        errorText.textContent = 'Current reading cannot be lower than the previous reading.';
+        errorText.classList.add('visible');
+        resultCard.classList.remove('visible');
+        return;
+      }
+
+      errorText.classList.remove('visible');
+      errorText.textContent = '';
+
+      const consumption = currNum - prevNum;
+      const bill = consumption * rateNum;
+
+      consumptionValue.textContent = consumption.toLocaleString('en-PH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }) + ' kWh';
+
+      billValue.textContent = formatCurrency(bill);
+
+      resultCard.classList.add('visible');
+
+      localStorage.setItem('prevReading', currInput.value);
+    }
+
+    calcBtn.addEventListener('click', validateAndCalculate);
+
+    document.querySelectorAll('.form-group input').forEach(input => {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          validateAndCalculate();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

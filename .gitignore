@@ -1,25 +1,54 @@
-# Ignore the memory file
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+.cache/
+
+# Node
+node_modules/
+.next/
+out/
+
+# Databases & sessions
+*.db
+*.db-journal
+*.session
+
+# Build artifacts
+dist/
+build/
+*.spec
+
+# Logs
+*.log
+
+# State & memory files
 latest_speech_date.txt
 latest_fomc_date.txt
 csale.txt
 last_id.txt
 last_id_*.txt
-
-# Ignore Python cache folders
-__pycache__/
-.cache/
-
-# Ignore environment files (where we will hide your keys)
-.env
-
-# Ignore trading history
+last_telegram_id.json
 trading_history.json
 trading_context.json
+news_cache.json
+seller_history.json
 
-# My private scripts
-exercise.py
-test.py
+# Browser profiles
+chrome_profile/
 
-# Folders
-Playwright/
-BeautifulSoup/
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

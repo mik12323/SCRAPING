@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if is_admin %}Edit{% else %}Edit{% endif %} Listing | Used Cars Philippines</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f7f6; }
+        .form-section { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
+            <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" height="35" class="me-2">
+            Used Cars Philippines
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/browse">Browse Cars</a></li>
+                <li class="nav-item"><a class="nav-link" href="/sell-car">Sell Your Car</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/my-cars">My Cars</a></li>
+                {% if is_admin %}
+                <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<main class="container mb-5">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            {% if is_admin %}
+            <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+            {% else %}
+            <li class="breadcrumb-item"><a href="/my-cars">My Cars</a></li>
+            {% endif %}
+            <li class="breadcrumb-item active" aria-current="page">Edit Listing</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="form-section">
+                <h2 class="fw-bold mb-4">Edit Listing</h2>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% if is_admin %}
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" for="status">Status</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="pending" {% if listing.status == 'pending' %}selected{% endif %}>Pending</option>
+                            <option value="approved" {% if listing.status == 'approved' %}selected{% endif %}>Approved</option>
+                            <option value="rejected" {% if listing.status == 'rejected' %}selected{% endif %}>Rejected</option>
+                        </select>
+                    </div>
+                    {% endif %}
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" for="brand">Brand <span class="text-danger">*</span></label>
+                            <select class="form-select" id="brand" name="brand" required>
+                                <option value="">Select Brand...</option>
+                                {% for b in brands %}
+                                <option value="{{ b }}" {% if listing.brand == b %}selected{% endif %}>{{ b }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" for="model">Model <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="model" name="model" value="{{ listing.model }}" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="year">Year <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="year" name="year" value="{{ listing.year }}" min="1900" max="2026" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="price">Selling Price (₱) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="price" name="price" value="{{ "{:,}".format(listing.price) }}" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="car_type">Payment Type <span class="text-danger">*</span></label>
+                            <select class="form-select" id="car_type" name="car_type" required>
+                                <option value="Cash" {% if listing.car_type == 'Cash' %}selected{% endif %}>Cash</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="body_type">Body Type</label>
+                            <select class="form-select" id="body_type" name="body_type">
+                                <option value="">Select Body Type...</option>
+                                {% for bt in body_types %}
+                                <option value="{{ bt }}" {% if listing.body_type == bt %}selected{% endif %}>{{ bt }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="fuel_type">Fuel Type</label>
+                            <select class="form-select" id="fuel_type" name="fuel_type">
+                                <option value="">Select Fuel Type...</option>
+                                {% for ft in fuel_types %}
+                                <option value="{{ ft }}" {% if listing.fuel_type == ft %}selected{% endif %}>{{ ft }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="transmission">Transmission</label>
+                            <select class="form-select" id="transmission" name="transmission">
+                                <option value="">Select Transmission...</option>
+                                {% for t in transmissions %}
+                                <option value="{{ t }}" {% if listing.transmission == t %}selected{% endif %}>{{ t }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" for="contact">Owner Contact Number <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" id="contact" name="contact" value="{{ listing.owner_phone }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" for="location">Location <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="location" name="location" value="{{ listing.location }}" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold" for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="5">{{ listing.description }}</textarea>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold" for="photos">Add More Photos</label>
+                            <input type="file" class="form-control" id="photos" name="photos" multiple accept="image/*">
+                            <small class="text-muted">Optional. Photos will be added to the existing ones.</small>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">Save Changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    const priceInput = document.getElementById('price');
+    priceInput.addEventListener('input', function() {
+        let value = this.value.replace(/[^0-9]/g, '');
+        if (value) {
+            this.value = parseInt(value).toLocaleString('en-US');
+        }
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<footer class="bg-dark text-light pt-5 pb-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h5 class="fw-bold mb-3">Used Cars Philippines</h5>
+                <p class="text-light">Your trusted car agent in Metro Manila and Mindanao. We connect buyers and sellers with transparency and reliability.</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="fw-bold mb-3">Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-light text-decoration-none">Home</a></li>
+                    <li><a href="/browse" class="text-light text-decoration-none">Browse Cars</a></li>
+                    <li><a href="/sell-car" class="text-light text-decoration-none">Sell Your Car</a></li>
+                    <li><a href="/about" class="text-light text-decoration-none">About</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="fw-bold mb-3">Contact Us</h6>
+                <p class="mb-2">
+                    <a href="https://www.facebook.com/mikoy.dimaro/" target="_blank" class="btn btn-sm" style="background-color: #1877F2; border-color: #1877F2; color: white;" rel="noopener noreferrer">
+                        Facebook
+                    </a>
+                </p>
+                <p class="mb-2 text-light">Call: +63 997 094 6623</p>
+                <p class="mb-0 text-light">Email: mikoy.dimaro@gmail.com</p>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <div class="text-center text-light">
+            <small>&copy; 2026 Used Cars Philippines. All rights reserved.</small>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
