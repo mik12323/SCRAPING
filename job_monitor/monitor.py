@@ -129,8 +129,8 @@ def parse_jobs(page_html):
 
 
 def matches_keywords(job, keywords):
-    text = f"{job['title']} {job['description']} {' '.join(job['tags'])}".lower()
-    return any(kw.lower() in text for kw in keywords)
+    title = job["title"].lower()
+    return any(kw.lower() in title for kw in keywords)
 
 
 def build_embed(job, snippet_length):
